@@ -1,0 +1,1669 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI时代数字化全技术栈 · 交互式架构图谱</title>
+<style>
+/* ===== 基础重置与变量 ===== */
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#F0F2F5;--card:#FFFFFF;--text:#1A1A2E;--text-sub:#5A6070;--border:#E2E6ED;
+  --l1:#D4763A;--l1-bg:#FDF0E6;--l1-border:#E8A87C;
+  --l2:#2E8B8B;--l2-bg:#E6F5F5;--l2-border:#5BC0BE;
+  --l3:#2C5F8D;--l3-bg:#E8F0F8;--l3-border:#5B9BD5;
+  --l4:#3A7CA5;--l4-bg:#EBF3F8;--l4-border:#6FA8C8;
+  --l5:#3D8B40;--l5-bg:#E8F5E9;--l5-border:#66BB6A;
+  --l6:#6A3D9A;--l6-bg:#F3EAF8;--l6-border:#9B59B6;
+  --l7:#8E44AD;--l7-bg:#F5EBF8;--l7-border:#BB8FCE;
+  --l8:#D35400;--l8-bg:#FDEBD8;--l8-border:#E67E22;
+  --l9:#B7950B;--l9-bg:#FEF9E7;--l9-border:#F1C40F;
+  --l10:#C0392B;--l10-bg:#FDEDEC;--l10-border:#E74C3C;
+  --sec:#C0392B;--sec-bg:#FDEDEC;--sec-border:#E74C3C;
+  --open:#1E8449;--open-bg:#E8F8F0;--closed:#5D6D7E;--closed-bg:#EBF0F5;--mixed:#B9770E;--mixed-bg:#FEF5E7;
+  --shadow:0 1px 3px rgba(0,0,0,.08),0 1px 2px rgba(0,0,0,.06);
+  --shadow-hover:0 4px 12px rgba(0,0,0,.12);
+}
+body{font-family:"Segoe UI","Microsoft YaHei","PingFang SC",sans-serif;background:var(--bg);color:var(--text);line-height:1.6;font-size:14px}
+a{color:inherit;text-decoration:none}
+
+/* ===== 顶部导航 ===== */
+.topnav{position:sticky;top:0;z-index:100;background:#1A1A2E;color:#fff;box-shadow:0 2px 8px rgba(0,0,0,.2)}
+.topnav-inner{max-width:1600px;margin:0 auto;display:flex;align-items:center;padding:0 24px;height:56px;gap:8px}
+.logo{font-weight:700;font-size:16px;white-space:nowrap;margin-right:16px;display:flex;align-items:center;gap:8px}
+.logo-dot{width:10px;height:10px;border-radius:50%;background:linear-gradient(135deg,#667eea,#764ba2);animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+.nav-links{display:flex;gap:2px;flex:1;overflow-x:auto;scrollbar-width:none}
+.nav-links::-webkit-scrollbar{display:none}
+.nav-item{padding:8px 14px;border-radius:6px;font-size:13px;white-space:nowrap;cursor:pointer;transition:all .2s;color:#B0B8C8}
+.nav-item:hover{background:rgba(255,255,255,.1);color:#fff}
+.nav-item.active{background:rgba(102,126,234,.3);color:#fff;font-weight:600}
+.nav-search{position:relative}
+.nav-search input{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);color:#fff;padding:6px 12px 6px 32px;border-radius:6px;font-size:13px;width:180px;outline:none}
+.nav-search input::placeholder{color:#8892A8}
+.nav-search svg{position:absolute;left:10px;top:50%;transform:translateY(-50%);width:14px;height:14px;color:#8892A8}
+
+/* ===== 主内容区 ===== */
+.main{max-width:1600px;margin:0 auto;padding:24px}
+.view{display:none}
+.view.active{display:block;animation:fadeIn .3s ease}
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+
+/* ===== 页面标题区 ===== */
+.page-header{margin-bottom:20px}
+.page-title{font-size:24px;font-weight:700;margin-bottom:4px}
+.page-subtitle{color:var(--text-sub);font-size:14px}
+
+/* ===== 今日动态横幅 ===== */
+.daily-banner{background:linear-gradient(135deg,#1A1A2E,#2D2D5E);border-radius:12px;padding:20px 24px;margin-bottom:24px;color:#fff;position:relative;overflow:hidden}
+.daily-banner::before{content:"";position:absolute;top:-50%;right:-10%;width:300px;height:300px;background:radial-gradient(circle,rgba(102,126,234,.3),transparent 70%);border-radius:50%}
+.daily-header{display:flex;align-items:center;gap:12px;margin-bottom:12px;position:relative}
+.daily-tag{background:#E74C3C;padding:3px 10px;border-radius:4px;font-size:11px;font-weight:700;letter-spacing:1px}
+.daily-date{font-size:13px;color:#A0A8C0}
+.daily-items{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:10px;position:relative}
+.daily-item{background:rgba(255,255,255,.08);border-left:3px solid #667eea;padding:10px 14px;border-radius:6px;font-size:13px;cursor:pointer;transition:all .2s}
+.daily-item:hover{background:rgba(255,255,255,.14);transform:translateX(4px)}
+.daily-item-cat{font-size:11px;color:#8892C0;margin-bottom:2px}
+.daily-item-text{color:#E8EAF0;flex:1}
+.daily-item{display:flex;flex-wrap:wrap;align-items:flex-start;position:relative}
+.daily-item-arrow{font-size:10px;color:#667eea;margin-left:8px;margin-top:4px;transition:transform .3s;flex-shrink:0}
+.daily-item-detail{display:none;width:100%;margin-top:10px;padding-top:10px;border-top:1px solid rgba(255,255,255,.1);animation:fadeIn .3s}
+.daily-detail-text{font-size:12px;color:#B8C0D8;line-height:1.7;margin-bottom:8px}
+.daily-detail-meta{display:flex;justify-content:space-between;align-items:center;font-size:11px}
+.daily-detail-source{color:#7A84A8}
+.daily-detail-link{color:#667eea;text-decoration:none;font-weight:500}
+.daily-detail-link:hover{text-decoration:underline}
+@keyframes fadeIn{from{opacity:0;transform:translateY(-5px)}to{opacity:1;transform:translateY(0)}}
+.history-filter{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin-bottom:20px;padding:12px 16px;background:rgba(255,255,255,.05);border-radius:8px}
+.history-filter-label{font-size:13px;color:#8892C0;margin-right:4px}
+.history-filter-item{padding:4px 12px;font-size:12px;color:#A0A8C0;background:rgba(255,255,255,.06);border-radius:12px;cursor:pointer;transition:all .2s}
+.history-filter-item:hover{background:rgba(102,126,234,.2);color:#E8EAF0}
+.history-filter-item.active{background:#667eea;color:#fff}
+.history-day{margin-bottom:28px}
+.history-day-header{display:flex;align-items:center;gap:12px;margin-bottom:12px;padding-bottom:8px;border-bottom:1px solid rgba(255,255,255,.08)}
+.history-day-date{font-size:16px;font-weight:600;color:#E8EAF0}
+.history-day-count{font-size:12px;color:#667eea;background:rgba(102,126,234,.15);padding:2px 10px;border-radius:10px}
+.history-day-items{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:10px}
+.history-empty{text-align:center;padding:60px 20px;color:#667eea;font-size:14px}
+
+/* ===== 架构层通用样式 ===== */
+.arch-layer{margin-bottom:16px;border-radius:10px;overflow:hidden;box-shadow:var(--shadow)}
+.layer-header{display:flex;align-items:center;padding:10px 20px;color:#fff;font-weight:600;font-size:15px;gap:12px}
+.layer-num{width:28px;height:28px;border-radius:50%;background:rgba(255,255,255,.25);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;flex-shrink:0}
+.layer-title{flex:1}
+.layer-desc{font-size:12px;font-weight:400;opacity:.85}
+.layer-body{padding:16px 20px;display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:10px}
+.layer-body.wide{grid-template-columns:repeat(auto-fill,minmax(240px,1fr))}
+
+/* ===== 模块卡片 ===== */
+.module-card{background:var(--card);border-radius:8px;padding:12px 14px;cursor:pointer;transition:all .2s;border-left:3px solid var(--border);position:relative}
+.module-card:hover{box-shadow:var(--shadow-hover);transform:translateY(-2px)}
+.module-card.l1{border-left-color:var(--l1)}
+.module-card.l2{border-left-color:var(--l2)}
+.module-card.l3{border-left-color:var(--l3)}
+.module-card.l4{border-left-color:var(--l4)}
+.module-card.l5{border-left-color:var(--l5)}
+.module-card.l6{border-left-color:var(--l6)}
+.module-card.l7{border-left-color:var(--l7)}
+.module-card.l8{border-left-color:var(--l8)}
+.module-card.l9{border-left-color:var(--l9)}
+.module-card.l10{border-left-color:var(--l10)}
+.module-name{font-weight:600;font-size:13px;margin-bottom:3px;display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+.module-desc{font-size:12px;color:var(--text-sub);line-height:1.5}
+.module-tags{display:flex;gap:4px;margin-top:8px;flex-wrap:wrap}
+
+/* ===== 标签样式 ===== */
+.tag{display:inline-block;padding:1px 7px;border-radius:3px;font-size:10px;font-weight:600;letter-spacing:.3px}
+.tag.open{background:var(--open-bg);color:var(--open)}
+.tag.closed{background:var(--closed-bg);color:var(--closed)}
+.tag.mixed{background:var(--mixed-bg);color:var(--mixed)}
+.tag.mature{background:#D5F5E3;color:#1E8449}
+.tag.growing{background:#FEF9E7;color:#B7950B}
+.tag.emerging{background:#FDEDEC;color:#C0392B}
+.tag.hot{background:#FDEDEC;color:#C0392B;animation:tagPulse 1.5s infinite}
+@keyframes tagPulse{0%,100%{opacity:1}50%{opacity:.6}}
+
+/* ===== 层间连线箭头 ===== */
+.layer-connector{display:flex;justify-content:center;padding:4px 0;position:relative}
+.arrow-down{width:0;height:0;border-left:8px solid transparent;border-right:8px solid transparent;border-top:10px solid #B0B8C8;position:relative}
+.arrow-down::after{content:"";position:absolute;top:-18px;left:50%;transform:translateX(-50%);width:2px;height:12px;background:#B0B8C8}
+.flow-label{font-size:11px;color:var(--text-sub);background:var(--bg);padding:0 8px;position:relative;z-index:1}
+
+/* ===== 详情侧滑面板 ===== */
+.detail-overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.4);z-index:200;opacity:0;visibility:hidden;transition:all .3s}
+.detail-overlay.show{opacity:1;visibility:visible}
+.detail-panel{position:fixed;top:0;right:0;width:520px;max-width:90vw;height:100%;background:#fff;z-index:201;transform:translateX(100%);transition:transform .3s ease;box-shadow:-4px 0 20px rgba(0,0,0,.15);display:flex;flex-direction:column}
+.detail-panel.show{transform:translateX(0)}
+.detail-header{padding:20px 24px;border-bottom:1px solid var(--border);background:var(--card)}
+.detail-title{font-size:18px;font-weight:700;margin-bottom:4px}
+.detail-layer{font-size:12px;color:var(--text-sub)}
+.detail-close{position:absolute;top:16px;right:16px;width:32px;height:32px;border-radius:50%;border:none;background:var(--bg);cursor:pointer;font-size:18px;display:flex;align-items:center;justify-content:center;color:var(--text-sub)}
+.detail-close:hover{background:#E2E6ED}
+.detail-body{flex:1;overflow-y:auto;padding:20px 24px}
+.detail-section{margin-bottom:20px}
+.detail-section-title{font-size:13px;font-weight:700;color:var(--text);margin-bottom:10px;padding-bottom:6px;border-bottom:2px solid var(--border);display:flex;align-items:center;gap:8px}
+.detail-desc{font-size:13px;color:var(--text-sub);line-height:1.7;margin-bottom:12px}
+.product-list{display:flex;flex-direction:column;gap:8px}
+.product-item{background:var(--bg);border-radius:8px;padding:12px 14px;border-left:3px solid var(--border)}
+.product-item.open-source{border-left-color:var(--open)}
+.product-item.closed-source{border-left-color:var(--closed)}
+.product-name{font-weight:600;font-size:13px;display:flex;align-items:center;gap:8px;margin-bottom:4px}
+.product-meta{font-size:11px;color:var(--text-sub);margin-bottom:6px}
+.product-desc{font-size:12px;color:var(--text-sub);line-height:1.6}
+.product-link{display:inline-block;margin-top:6px;font-size:12px;color:#2C5F8D;font-weight:600}
+.product-link:hover{text-decoration:underline}
+.install-cmd{background:#1A1A2E;color:#A8E6CF;padding:8px 12px;border-radius:6px;font-family:"Consolas","Monaco",monospace;font-size:12px;margin-top:6px;overflow-x:auto;white-space:pre}
+.tab-bar{display:flex;gap:0;margin-bottom:16px;border-bottom:2px solid var(--border)}
+.tab-btn{padding:8px 16px;font-size:13px;font-weight:600;border:none;background:none;cursor:pointer;color:var(--text-sub);border-bottom:2px solid transparent;margin-bottom:-2px}
+.tab-btn.active{color:var(--text);border-bottom-color:var(--l6)}
+
+/* ===== 首页全景图 ===== */
+.overview-stack{display:flex;flex-direction:column;gap:0;margin-bottom:24px}
+.ov-layer{display:grid;grid-template-columns:120px 1fr;align-items:stretch;border-radius:8px;overflow:hidden;cursor:pointer;transition:all .25s;box-shadow:var(--shadow)}
+.ov-layer:hover{box-shadow:var(--shadow-hover);transform:scale(1.01)}
+.ov-layer-label{padding:16px 12px;color:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:4px}
+.ov-layer-num{font-size:22px;font-weight:800;opacity:.9}
+.ov-layer-name{font-size:13px;font-weight:600}
+.ov-layer-content{padding:12px 16px;background:var(--card);display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.ov-chip{background:var(--bg);padding:4px 10px;border-radius:4px;font-size:11px;color:var(--text-sub)}
+.ov-arrow{text-align:center;padding:2px 0;color:#B0B8C8;font-size:16px}
+
+/* ===== 指标看板 ===== */
+.metrics-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:14px;margin-bottom:24px}
+.metric-card{background:var(--card);border-radius:10px;padding:18px;box-shadow:var(--shadow);border-top:3px solid var(--l6)}
+.metric-value{font-size:28px;font-weight:800;color:var(--l6)}
+.metric-label{font-size:12px;color:var(--text-sub);margin-top:4px}
+.metric-trend{font-size:11px;color:var(--open);margin-top:2px}
+
+/* ===== 图例 ===== */
+.legend{display:flex;flex-wrap:wrap;gap:16px;padding:14px 20px;background:var(--card);border-radius:8px;margin-top:16px;box-shadow:var(--shadow)}
+.legend-item{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--text-sub)}
+.legend-dot{width:12px;height:12px;border-radius:3px}
+
+/* ===== 子分组 ===== */
+.sub-group{margin-bottom:14px}
+.sub-group-title{font-size:12px;font-weight:700;color:var(--text-sub);margin-bottom:8px;text-transform:uppercase;letter-spacing:1px;display:flex;align-items:center;gap:6px}
+.sub-group-title::before{content:"";width:3px;height:14px;background:currentColor;border-radius:2px}
+
+/* ===== 响应式 ===== */
+@media(max-width:768px){
+  .topnav-inner{padding:0 12px}
+  .nav-search{display:none}
+  .main{padding:16px 12px}
+  .layer-body{grid-template-columns:1fr}
+  .daily-items{grid-template-columns:1fr}
+  .detail-panel{width:100%}
+  .ov-layer{grid-template-columns:80px 1fr}
+  .ov-layer-num{font-size:18px}
+}
+</style>
+</head>
+<body>
+
+<!-- ===== 顶部导航 ===== -->
+<nav class="topnav">
+  <div class="topnav-inner">
+    <div class="logo"><span class="logo-dot"></span>AI全技术栈图谱</div>
+    <div class="nav-links" id="navLinks">
+      <div class="nav-item active" data-view="overview">全景总览</div>
+      <div class="nav-item" data-view="physical">物理与具身</div>
+      <div class="nav-item" data-view="network">网络与边缘</div>
+      <div class="nav-item" data-view="hardware">硬件与算力</div>
+      <div class="nav-item" data-view="softdata">软件与数据</div>
+      <div class="nav-item" data-view="aimodel">AI模型算法</div>
+      <div class="nav-item" data-view="aieng">AI工程/Harness</div>
+      <div class="nav-item" data-view="appsec">应用与安全</div>
+      <div class="nav-item" data-view="history">历史资讯</div>
+    </div>
+    <div class="nav-search">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+      <input type="text" placeholder="搜索技术模块..." id="searchInput">
+    </div>
+  </div>
+</nav>
+
+<div class="main">
+
+<!-- ===== 视图1：全景总览 ===== -->
+<div class="view active" id="view-overview">
+  <div class="page-header">
+    <div class="page-title">AI时代数字化全技术栈 · 全景架构</div>
+    <div class="page-subtitle">从物理感知到用户体验的10层完整技术链路 · 点击任意层进入详细架构</div>
+  </div>
+
+  <!-- 今日动态 -->
+  <div class="daily-banner">
+    <div class="daily-header">
+      <span class="daily-tag">今日动态</span>
+      <span class="daily-date" id="todayDate">2026年10月3日</span>
+    </div>
+    <div class="daily-items" id="dailyItems"></div>
+  </div>
+
+  <!-- 关键指标 -->
+  <div class="metrics-grid">
+    <div class="metric-card"><div class="metric-value">10</div><div class="metric-label">技术层级</div><div class="metric-trend">全覆盖</div></div>
+    <div class="metric-card"><div class="metric-value">200+</div><div class="metric-label">技术模块</div><div class="metric-trend">持续更新</div></div>
+    <div class="metric-card"><div class="metric-value">80+</div><div class="metric-label">开源项目</div><div class="metric-trend">可直接部署</div></div>
+    <div class="metric-card"><div class="metric-value">50+</div><div class="metric-label">厂商产品</div><div class="metric-trend">全球视野</div></div>
+    <div class="metric-card"><div class="metric-value">8</div><div class="metric-label">架构视图</div><div class="metric-trend">逐层下钻</div></div>
+  </div>
+
+  <!-- 全景堆叠架构图 -->
+  <div class="overview-stack" id="overviewStack"></div>
+
+  <!-- 图例 -->
+  <div class="legend">
+    <div class="legend-item"><span class="legend-dot" style="background:var(--open)"></span>开源</div>
+    <div class="legend-item"><span class="legend-dot" style="background:var(--closed)"></span>闭源/商业</div>
+    <div class="legend-item"><span class="legend-dot" style="background:var(--mixed)"></span>混合/双模式</div>
+    <div class="legend-item"><span class="tag mature">成熟</span>技术成熟可规模化</div>
+    <div class="legend-item"><span class="tag growing">成长</span>快速发展中</div>
+    <div class="legend-item"><span class="tag emerging">萌芽</span>前沿探索期</div>
+    <div class="legend-item"><span class="tag hot">热点</span>当前最受关注</div>
+  </div>
+</div>
+
+<!-- ===== 视图2：物理世界与具身架构（L1） ===== -->
+<div class="view" id="view-physical">
+  <div class="page-header">
+    <div class="page-title">L1 · 物理感知与执行架构</div>
+    <div class="page-subtitle">传感器采集 → 边缘预处理 → 执行器响应 · 具身智能与物联网的物理世界接口</div>
+  </div>
+  <div id="physicalContent"></div>
+</div>
+
+<!-- ===== 视图3：网络与边缘计算架构（L2） ===== -->
+<div class="view" id="view-network">
+  <div class="page-header">
+    <div class="page-title">L2 · 网络与边缘计算架构</div>
+    <div class="page-subtitle">从设备接入到高速互联 · 端-边-云协同的网络基础设施</div>
+  </div>
+  <div id="networkContent"></div>
+</div>
+
+<!-- ===== 视图4：硬件与算力基础设施架构（L3） ===== -->
+<div class="view" id="view-hardware">
+  <div class="page-header">
+    <div class="page-title">L3 · 硬件与算力基础设施架构</div>
+    <div class="page-subtitle">芯片 → 存储 → 集群 → 数据中心 · AI时代的算力底座</div>
+  </div>
+  <div id="hardwareContent"></div>
+</div>
+
+<!-- ===== 视图5：基础软件与数据架构（L4+L5） ===== -->
+<div class="view" id="view-softdata">
+  <div class="page-header">
+    <div class="page-title">L4+L5 · 基础软件与数据架构</div>
+    <div class="page-subtitle">操作系统 → 数据库 → 数据流水线 → 隐私计算 · 数字世界的地基</div>
+  </div>
+  <div id="softdataContent"></div>
+</div>
+
+<!-- ===== 视图6：AI模型与算法架构（L6） ===== -->
+<div class="view" id="view-aimodel">
+  <div class="page-header">
+    <div class="page-title">L6 · AI模型与算法架构</div>
+    <div class="page-subtitle">基础模型 → 训练技术 → 推理优化 → RAG → 安全对齐 · AI能力核心</div>
+  </div>
+  <div id="aimodelContent"></div>
+</div>
+
+<!-- ===== 视图7：AI工程与Harness架构（L7） ===== -->
+<div class="view" id="view-aieng">
+  <div class="page-header">
+    <div class="page-title">L7 · AI工程与Harness架构</div>
+    <div class="page-subtitle">Harness Engineering · 训练平台 → 推理平台 → Agent框架 → MCP/A2A → 可观测性</div>
+  </div>
+  <div id="aiengContent"></div>
+</div>
+
+<!-- ===== 视图8：应用开发与业务安全架构（L8-L10+横向） ===== -->
+<div class="view" id="view-appsec">
+  <div class="page-header">
+    <div class="page-title">L8-L10 · 应用开发与业务安全架构</div>
+    <div class="page-subtitle">应用开发 → 行业应用 → 用户交互 · 安全治理横向贯穿</div>
+  </div>
+  <div id="appsecContent"></div>
+</div>
+
+<div class="view" id="view-history">
+  <div class="page-header">
+    <div class="page-title">历史资讯 · AI全技术栈动态归档</div>
+    <div class="page-subtitle">每日动态沉淀 · 按日期归档 · 点击展开详情 · 可按分类筛选</div>
+  </div>
+  <div class="history-filter">
+    <span class="history-filter-label">分类筛选：</span>
+    <span class="history-filter-item active" onclick="filterHistory('all', this)">全部</span>
+    <span class="history-filter-item" onclick="filterHistory('大模型', this)">大模型</span>
+    <span class="history-filter-item" onclick="filterHistory('具身智能', this)">具身智能</span>
+    <span class="history-filter-item" onclick="filterHistory('AI工程', this)">AI工程</span>
+    <span class="history-filter-item" onclick="filterHistory('开源生态', this)">开源生态</span>
+    <span class="history-filter-item" onclick="filterHistory('国产算力', this)">国产算力</span>
+    <span class="history-filter-item" onclick="filterHistory('智能体', this)">智能体</span>
+    <span class="history-filter-item" onclick="filterHistory('AI芯片', this)">AI芯片</span>
+    <span class="history-filter-item" onclick="filterHistory('多模态', this)">多模态</span>
+  </div>
+  <div id="historyContent"></div>
+</div>
+
+</div><!-- end .main -->
+
+<!-- ===== 详情侧滑面板 ===== -->
+<div class="detail-overlay" id="detailOverlay"></div>
+<div class="detail-panel" id="detailPanel">
+  <div class="detail-header">
+    <div class="detail-title" id="detailTitle">模块详情</div>
+    <div class="detail-layer" id="detailLayer"></div>
+    <button class="detail-close" id="detailClose">×</button>
+  </div>
+  <div class="detail-body" id="detailBody"></div>
+</div>
+
+<script>
+// ===== 数据定义：全技术栈架构数据 =====
+const ARCH_DATA = {
+  physical: {
+    layers: [
+      {id:'sense', num:'1.1', title:'感知传感器系统', desc:'物理世界信号采集', color:'l1', groups:[
+        {name:'视觉感知', modules:[
+          {id:'cam',name:'摄像头/视觉传感器',desc:'RGB/深度/红外成像，环境与物体识别',license:'mixed',maturity:'mature',products:[
+            {name:'OpenCV',type:'open',desc:'全球最流行的开源计算机视觉库',url:'https://github.com/opencv/opencv',install:'pip install opencv-python',stars:'80k+'},
+            {name:'RealSense',type:'open',desc:'Intel深度相机SDK，支持ROS集成',url:'https://github.com/IntelRealSense/librealsense',install:'apt install librealsense2-utils',stars:'2.5k+'},
+            {name:'海康威视',type:'closed',desc:'工业级视觉传感器与AI相机'}
+          ]},
+          {id:'lidar',name:'激光雷达/LiDAR',desc:'3D点云采集，自动驾驶与机器人核心',license:'mixed',maturity:'growing',products:[
+            {name:'Livox SDK',type:'open',desc:'大疆览沃激光雷达开源驱动',url:'https://github.com/Livox-SDK/Livox-SDK',install:'git clone && cmake',stars:'1k+'},
+            {name:'Velodyne',type:'closed',desc:'工业级激光雷达厂商'},
+            {name:'禾赛科技',type:'closed',desc:'国产激光雷达龙头'}
+          ]},
+          {id:'tof',name:'ToF/结构光',desc:'飞行时间深度感知，面部识别与手势',license:'mixed',maturity:'mature'}
+        ]},
+        {name:'听觉感知', modules:[
+          {id:'mic',name:'麦克风阵列',desc:'远场拾音、声源定位、语音增强',license:'mixed',maturity:'mature',products:[
+            {name:'Snowboy',type:'open',desc:'离线语音唤醒引擎（仍广泛使用）',url:'https://github.com/Kitt-AI/snowboy',install:'',stars:'5k+'},
+            {name:'ReSpeaker',type:'open',desc:'Seeed麦克风阵列硬件+驱动',url:'https://github.com/respeaker',install:'',stars:''},
+            {name:'科大讯飞',type:'closed',desc:'语音识别与麦克风阵列方案'}
+          ]},
+          {id:'audio',name:'音频处理',desc:'降噪、回声消除、声纹识别',license:'open',maturity:'mature',products:[
+            {name:'WebRTC',type:'open',desc:'实时音频处理，含AEC/NS/AGC',url:'https://github.com/webrtc',install:'',stars:'15k+'},
+            {name:'RNNoise',type:'open',desc:'基于RNN的实时降噪',url:'https://github.com/xiph/rnnoise',install:'',stars:'1.5k+'}
+          ]}
+        ]},
+        {name:'触觉与力觉', modules:[
+          {id:'tactile',name:'触觉传感器/电子皮肤',desc:'压力、滑动、温度感知，精密操作必需',license:'mixed',maturity:'growing',products:[
+            {name:'GelSight',type:'mixed',desc:'视觉式触觉传感器，开源算法部分',url:'https://github.com/gelsight',install:'',stars:'1k+'},
+            {name:'Figure AI触觉皮肤',type:'closed',desc:'新一代触觉皮肤阵列，暗光/透明物体精密操作'}
+          ]},
+          {id:'force',name:'力/力矩传感器',desc:'六维力感知，装配与打磨场景',license:'mixed',maturity:'mature'}
+        ]},
+        {name:'环境与生物', modules:[
+          {id:'env',name:'环境传感器',desc:'温湿度/气体/红外/PM2.5，IoT基础',license:'open',maturity:'mature',products:[
+            {name:'DHT系列',type:'open',desc:'温湿度传感器，Arduino/树莓派通用',url:'https://github.com/adafruit/DHT-sensor-library',install:'',stars:'2k+'},
+            {name:'SenseHat',type:'open',desc:'树莓派环境传感器HAT',url:'https://github.com/RPi-Distro/python-sense-hat',install:'pip install sense-hat',stars:'300+'}
+          ]},
+          {id:'bio',name:'生物传感器',desc:'心率/脑电/血氧/肌电，可穿戴与BCI',license:'mixed',maturity:'growing',products:[
+            {name:'OpenBCI',type:'open',desc:'开源脑机接口硬件与软件',url:'https://github.com/OpenBCI',install:'',stars:'2k+'},
+            {name:'Muse',type:'closed',desc:'消费级脑电头环'}
+          ]}
+        ]}
+      ]},
+      {id:'act', num:'1.2', title:'执行器与驱动系统', desc:'将数字指令转化为物理动作', color:'l1', groups:[
+        {name:'运动执行', modules:[
+          {id:'arm',name:'机械臂/灵巧手',desc:'多自由度操作，工业与服务机器人核心',license:'mixed',maturity:'growing',products:[
+            {name:'ROS 2',type:'open',desc:'机器人操作系统，机械臂控制标准框架',url:'https://github.com/ros2',install:'apt install ros-humble-desktop',stars:'1.5k+'},
+            {name:'MoveIt',type:'open',desc:'ROS机械臂运动规划库',url:'https://github.com/ros-planning/moveit2',install:'',stars:'1k+'},
+            {name:'UR机器人',type:'closed',desc:'协作机械臂厂商'},
+            {name:'遨博/节卡',type:'closed',desc:'国产协作机械臂'}
+          ]},
+          {id:'mobile',name:'移动底盘/AGV/AMR',desc:'轮式/履带式移动，物流与巡检',license:'mixed',maturity:'mature',products:[
+            {name:'Navigation2',type:'open',desc:'ROS2导航框架，SLAM+路径规划',url:'https://github.com/ros-navigation/navigation2',install:'',stars:'1k+'},
+            {name:'Slamtec',type:'mixed',desc:'思岚科技，激光SLAM与AGV方案'}
+          ]},
+          {id:'motor',name:'伺服电机/驱动器',desc:'高精度运动控制，机器人关节',license:'mixed',maturity:'mature'}
+        ]},
+        {name:'输出与反馈', modules:[
+          {id:'display',name:'显示屏/投影',desc:'视觉信息输出，AR/VR光学',license:'mixed',maturity:'mature'},
+          {id:'speaker',name:'扬声器/语音合成',desc:'音频输出，TTS语音播报',license:'open',maturity:'mature',products:[
+            {name:'Coqui TTS',type:'open',desc:'开源神经语音合成引擎',url:'https://github.com/coqui-ai/TTS',install:'pip install TTS',stars:'30k+'},
+            {name:'Edge-TTS',type:'open',desc:'微软Edge在线TTS的Python接口',url:'https://github.com/rany2/edge-tts',install:'pip install edge-tts',stars:'5k+'}
+          ]},
+          {id:'haptic',name:'触觉反馈',desc:'振动/力反馈，VR与远程操作',license:'mixed',maturity:'growing'}
+        ]}
+      ]},
+      {id:'iot', num:'1.3', title:'IoT终端与边缘网关', desc:'万物互联的感知节点', color:'l1', groups:[
+        {name:'IoT硬件', modules:[
+          {id:'mcu',name:'MCU/嵌入式终端',desc:'STM32/ESP32等低功耗物联网芯片',license:'open',maturity:'mature',products:[
+            {name:'ESP-IDF',type:'open',desc:'乐鑫ESP32官方开发框架',url:'https://github.com/espressif/esp-idf',install:'',stars:'6k+'},
+            {name:'Arduino',type:'open',desc:'全球最大开源硬件生态',url:'https://github.com/arduino',install:'',stars:'5k+'},
+            {name:'Zephyr',type:'open',desc:'Linux基金会实时操作系统',url:'https://github.com/zephyrproject-rtos/zephyr',install:'',stars:'10k+'}
+          ]},
+          {id:'rfid',name:'RFID/NFC',desc:'无线识别与近场通信',license:'mixed',maturity:'mature'},
+          {id:'plc',name:'PLC/DCS工业控制',desc:'工业自动化控制器，产线大脑',license:'closed',maturity:'mature',products:[
+            {name:'OpenPLC',type:'open',desc:'开源PLC运行时',url:'https://github.com/thiagoralves/OpenPLC_v3',install:'',stars:'1k+'},
+            {name:'西门子/施耐德',type:'closed',desc:'工业PLC主流厂商'}
+          ]}
+        ]},
+        {name:'边缘网关', modules:[
+          {id:'gateway',name:'边缘网关',desc:'协议转换、数据预处理、本地决策',license:'mixed',maturity:'growing',products:[
+            {name:'EdgeX Foundry',type:'open',desc:'Linux基金会边缘物联网框架',url:'https://github.com/edgexfoundry',install:'',stars:'1.5k+'},
+            {name:'KubeEdge',type:'open',desc:'云原生边缘计算框架，K8s延伸',url:'https://github.com/kubeedge/kubeedge',install:'',stars:'7k+'}
+          ]}
+        ]}
+      ]},
+      {id:'body', num:'1.4', title:'具身智能本体', desc:'AI的物理身体', color:'l1', groups:[
+        {name:'人形与仿生', modules:[
+          {id:'humanoid',name:'人形机器人',desc:'双足行走+双臂操作，通用机器人终极形态',license:'mixed',maturity:'growing',products:[
+            {name:'宇树H1/H1-Pro',type:'mixed',desc:'端侧世界模型芯片，零样本抓取92%成功率'},
+            {name:'智元远征A2',type:'closed',desc:'GO-2基座大模型驱动，动作思维链'},
+            {name:'Figure 02',type:'closed',desc:'OpenAI合作，触觉皮肤+灵巧手'},
+            {name:'Tesla Optimus',type:'closed',desc:'特斯拉人形机器人'},
+            {name:'波士顿动力Atlas',type:'closed',desc:'液压驱动人形，运动能力标杆'}
+          ]},
+          {id:'quadruped',name:'四足/机器狗',desc:'复杂地形移动，巡检与勘探',license:'mixed',maturity:'mature',products:[
+            {name:'宇树Go2/B2',type:'mixed',desc:'消费级与工业级四足机器人'},
+            {name:'波士顿动力Spot',type:'closed',desc:'工业巡检四足标杆'}
+          ]}
+        ]},
+        {name:'专用机器人', modules:[
+          {id:'industrial',name:'工业机器人',desc:'焊接/装配/搬运，产线自动化',license:'closed',maturity:'mature'},
+          {id:'amr',name:'AMR/AGV物流机器人',desc:'仓储物流自动搬运',license:'mixed',maturity:'mature'},
+          {id:'drone',name:'无人机/UAV',desc:'空中巡检、测绘、配送',license:'mixed',maturity:'mature',products:[
+            {name:'PX4',type:'open',desc:'开源无人机飞控固件',url:'https://github.com/PX4/PX4-Autopilot',install:'',stars:'10k+'},
+            {name:'ArduPilot',type:'open',desc:'开源自动驾驶系统',url:'https://github.com/ArduPilot/ardupilot',install:'',stars:'5k+'},
+            {name:'大疆',type:'closed',desc:'消费级与工业级无人机龙头'}
+          ]},
+          {id:'exo',name:'外骨骼/康复机器人',desc:'人体增强与医疗康复',license:'mixed',maturity:'emerging'}
+        ]}
+      ]},
+      {id:'wearable', num:'1.5', title:'可穿戴与脑机接口', desc:'人体增强与直接神经交互', color:'l1', groups:[
+        {name:'XR设备', modules:[
+          {id:'arvr',name:'AR/VR/MR头显',desc:'空间计算与沉浸式交互',license:'mixed',maturity:'growing',products:[
+            {name:'OpenXR',type:'open',desc:'跨平台XR开放标准',url:'https://github.com/KhronosGroup/OpenXR-SDK',install:'',stars:'1k+'},
+            {name:'Apple Vision Pro',type:'closed',desc:'空间计算标杆'},
+            {name:'Meta Quest',type:'closed',desc:'消费级VR龙头'},
+            {name:'XREAL',type:'mixed',desc:'国产AR眼镜'}
+          ]}
+        ]},
+        {name:'BCI与可穿戴', modules:[
+          {id:'bci',name:'脑机接口(BCI)',desc:'脑电信号解码，直接意念控制',license:'mixed',maturity:'emerging',products:[
+            {name:'OpenBCI',type:'open',desc:'开源脑机接口平台',url:'https://github.com/OpenBCI',install:'',stars:'2k+'},
+            {name:'Neuralink',type:'closed',desc:'侵入式脑机接口'},
+            {name:'BrainCo',type:'mixed',desc:'非侵入式BCI产品'}
+          ]},
+          {id:'wear',name:'智能手环/手表',desc:'健康监测与运动追踪',license:'closed',maturity:'mature'},
+          {id:'gloves',name:'触觉手套/动捕',desc:'手部动作捕捉与力反馈',license:'mixed',maturity:'growing'}
+        ]}
+      ]},
+      {id:'dt', num:'1.6', title:'数字孪生与仿真', desc:'物理世界的实时数字映射', color:'l1', groups:[
+        {name:'仿真与映射', modules:[
+          {id:'digitaltwin',name:'数字孪生平台',desc:'物理设备实时映射、仿真预测',license:'mixed',maturity:'growing',products:[
+            {name:'NVIDIA Omniverse',type:'mixed',desc:'工业元宇宙与数字孪生平台'},
+            {name:'Eclipse Ditto',type:'open',desc:'开源数字孪生框架',url:'https://github.com/eclipse-ditto/ditto',install:'',stars:'200+'}
+          ]},
+          {id:'sim',name:'机器人仿真环境',desc:'Sim2Real训练，降低真实数据成本',license:'open',maturity:'growing',products:[
+            {name:'Isaac Sim',type:'mixed',desc:'NVIDIA机器人仿真，部分开源',url:'https://github.com/NVIDIA-Omniverse/IsaacSim',install:'',stars:'1k+'},
+            {name:'Gazebo',type:'open',desc:'ROS标准机器人仿真器',url:'https://github.com/gazebosim/gz-sim',install:'',stars:'500+'},
+            {name:'MuJoCo',type:'open',desc:'DeepMind物理仿真引擎',url:'https://github.com/google-deepmind/mujoco',install:'pip install mujoco',stars:'7k+'},
+            {name:'SAPIEN',type:'open',desc:'具身智能仿真平台',url:'https://github.com/haosulab/SAPIEN',install:'',stars:'500+'}
+          ]}
+        ]}
+      ]}
+    ]
+  },
+  network: {
+    layers: [
+      {id:'access', num:'2.1', title:'接入网与无线通信', desc:'设备到网络的第一跳', color:'l2', groups:[
+        {name:'蜂窝通信', modules:[
+          {id:'5g',name:'5G/5G-Advanced',desc:'高速低延迟，工业互联网与车联网基础',license:'mixed',maturity:'mature',products:[
+            {name:'srsRAN',type:'open',desc:'开源5G RAN软件栈',url:'https://github.com/srsran/srsRAN_Project',install:'',stars:'3k+'},
+            {name:'OpenAirInterface',type:'open',desc:'开源4G/5G协议栈',url:'https://gitlab.eurecom.fr/oai/openairinterface5g',install:'',stars:''},
+            {name:'华为/中兴/爱立信',type:'closed',desc:'5G设备主流厂商'}
+          ]},
+          {id:'6g',name:'6G预研',desc:'太赫兹/智能超表面，2030年商用',license:'mixed',maturity:'emerging'},
+          {id:'sat',name:'卫星通信',desc:'低轨卫星星座，全球覆盖',license:'mixed',maturity:'growing',products:[
+            {name:'Starlink',type:'closed',desc:'SpaceX低轨卫星互联网'},
+            {name:'银河航天/中国星网',type:'closed',desc:'国产低轨卫星'}
+          ]}
+        ]},
+        {name:'短距离无线', modules:[
+          {id:'wifi',name:'WiFi 7',desc:'320MHz带宽，4096-QAM，高密场景',license:'mixed',maturity:'growing',products:[
+            {name:'hostap',type:'open',desc:'开源WiFi接入点软件',url:'https://w1.fi/hostapd/',install:'',stars:''},
+            {name:'高通/博通/联发科',type:'closed',desc:'WiFi芯片厂商'}
+          ]},
+          {id:'ble',name:'蓝牙5.4/BLE',desc:'低功耗短距离，可穿戴与IoT',license:'open',maturity:'mature',products:[
+            {name:'BlueZ',type:'open',desc:'Linux蓝牙协议栈',url:'https://github.com/bluez/bluez',install:'',stars:'1k+'}
+          ]},
+          {id:'lora',name:'LoRa/LoRaWAN',desc:'低功耗广域网，公里级IoT',license:'open',maturity:'mature',products:[
+            {name:'LoRaMac-node',type:'open',desc:'开源LoRaWAN节点协议栈',url:'https://github.com/Lora-net/LoRaMac-node',install:'',stars:'1.5k+'},
+            {name:'ChirpStack',type:'open',desc:'开源LoRaWAN网络服务器',url:'https://github.com/chirpstack/chirpstack',install:'',stars:'1k+'}
+          ]},
+          {id:'nbiot',name:'NB-IoT',desc:'窄带物联网，低功耗广覆盖',license:'closed',maturity:'mature'},
+          {id:'zigbee',name:'Zigbee/Thread/Matter',desc:'智能家居标准协议',license:'open',maturity:'mature',products:[
+            {name:'Matter',type:'open',desc:'CSA智能家居统一标准',url:'https://github.com/project-chip/connectedhomeip',install:'',stars:'3k+'}
+          ]}
+        ]}
+      ]},
+      {id:'bearer', num:'2.2', title:'承载网与高速互联', desc:'数据中心与骨干网络', color:'l2', groups:[
+        {name:'数据中心互联', modules:[
+          {id:'infiniband',name:'InfiniBand',desc:'RDMA高速互联，AI训练集群首选',license:'closed',maturity:'mature',products:[
+            {name:'NVIDIA Mellanox',type:'closed',desc:'InfiniBand主流厂商'},
+            {name:'UCX',type:'open',desc:'开源统一通信X框架，支持IB/RoCE',url:'https://github.com/openucx/ucx',install:'',stars:'1k+'}
+          ]},
+          {id:'roce',name:'RoCE/RDMA over Ethernet',desc:'以太网上的RDMA，成本更低',license:'mixed',maturity:'growing'},
+          {id:'nvlink',name:'NVLink/NVSwitch',desc:'NVIDIA GPU间高速互联，900GB/s',license:'closed',maturity:'mature'},
+          {id:'pcie',name:'PCIe 6.0/CXL',desc:'设备互联与内存池化标准',license:'open',maturity:'growing',products:[
+            {name:'CXL',type:'open',desc:'Compute Express Link，内存池化标准',url:'https://www.computeexpresslink.org/',install:'',stars:''}
+          ]},
+          {id:'ultraeth',name:'Ultra Ethernet',desc:'AI集群专用以太网标准',license:'open',maturity:'emerging'}
+        ]},
+        {name:'骨干与交换', modules:[
+          {id:'fiber',name:'光纤/OTN',desc:'骨干传输，400G/800G光模块',license:'closed',maturity:'mature'},
+          {id:'sdn',name:'SDN/NFV',desc:'软件定义网络与网络功能虚拟化',license:'open',maturity:'mature',products:[
+            {name:'OpenDaylight',type:'open',desc:'开源SDN控制器',url:'https://github.com/opendaylight',install:'',stars:'1k+'},
+            {name:'ONOS',type:'open',desc:'开源运营商级SDN控制器',url:'https://github.com/opennetworkinglab/onos',install:'',stars:'1.5k+'}
+          ]},
+          {id:'switch',name:'交换机/路由器',desc:'网络硬件设备',license:'closed',maturity:'mature'}
+        ]}
+      ]},
+      {id:'edge', num:'2.3', title:'边缘计算与MEC', desc:'算力下沉，低延迟处理', color:'l2', groups:[
+        {name:'边缘平台', modules:[
+          {id:'mec',name:'MEC多接入边缘计算',desc:'5G基站侧算力，URLLC场景',license:'mixed',maturity:'growing'},
+          {id:'edgeos',name:'边缘操作系统',desc:'边缘节点资源管理与调度',license:'open',maturity:'growing',products:[
+            {name:'KubeEdge',type:'open',desc:'K8s原生边缘计算框架',url:'https://github.com/kubeedge/kubeedge',install:'',stars:'7k+'},
+            {name:'OpenYurt',type:'open',desc:'阿里云开源边缘计算平台',url:'https://github.com/openyurtio/openyurt',install:'',stars:'1k+'},
+            {name:'Akri',type:'open',desc:'微软开源边缘设备发现框架',url:'https://github.com/project-akri/akri',install:'',stars:'500+'}
+          ]},
+          {id:'cdn',name:'CDN/边缘缓存',desc:'内容分发与边缘推理',license:'mixed',maturity:'mature'}
+        ]}
+      ]},
+      {id:'protocol', num:'2.4', title:'网络协议栈', desc:'从传输到应用的协议体系', color:'l2', groups:[
+        {name:'核心协议', modules:[
+          {id:'tcpip',name:'TCP/IP协议栈',desc:'互联网基础协议',license:'open',maturity:'mature'},
+          {id:'http3',name:'HTTP/3/QUIC',desc:'基于UDP的新一代Web传输',license:'open',maturity:'growing',products:[
+            {name:'quiche',type:'open',desc:'Cloudflare开源QUIC实现',url:'https://github.com/cloudflare/quiche',install:'',stars:'3k+'},
+            {name:'ngtcp2',type:'open',desc:'开源QUIC协议库',url:'https://github.com/ngtcp2/ngtcp2',install:'',stars:'1.5k+'}
+          ]},
+          {id:'grpc',name:'gRPC',desc:'高性能RPC框架，微服务标准',license:'open',maturity:'mature',products:[
+            {name:'gRPC',type:'open',desc:'Google开源RPC框架',url:'https://github.com/grpc/grpc',install:'pip install grpcio',stars:'42k+'}
+          ]},
+          {id:'mqtt',name:'MQTT',desc:'IoT轻量级消息协议',license:'open',maturity:'mature',products:[
+            {name:'Eclipse Mosquitto',type:'open',desc:'开源MQTT broker',url:'https://github.com/eclipse/mosquitto',install:'apt install mosquitto',stars:'1.5k+'},
+            {name:'EMQX',type:'open',desc:'国产开源MQTT消息服务器',url:'https://github.com/emqx/emqx',install:'',stars:'14k+'}
+          ]},
+          {id:'coap',name:'CoAP',desc:'受限设备应用协议',license:'open',maturity:'mature'},
+          {id:'opcua',name:'OPC-UA',desc:'工业自动化统一架构协议',license:'open',maturity:'mature',products:[
+            {name:'open62541',type:'open',desc:'开源OPC UA实现',url:'https://github.com/open62541/open62541',install:'',stars:'1.5k+'}
+          ]}
+        ]}
+      ]}
+    ]
+  },
+  hardware: {
+    layers: [
+      {id:'compute', num:'3.1', title:'计算芯片', desc:'AI时代的算力核心', color:'l3', groups:[
+        {name:'通用CPU', modules:[
+          {id:'x86',name:'x86 CPU',desc:'Intel/AMD，服务器与PC主力',license:'closed',maturity:'mature',products:[
+            {name:'Intel Xeon',type:'closed',desc:'服务器CPU，含AMX AI加速'},
+            {name:'AMD EPYC',type:'closed',desc:'高核心数服务器CPU'}
+          ]},
+          {id:'arm',name:'ARM CPU',desc:'低功耗，移动与服务器渗透',license:'mixed',maturity:'mature',products:[
+            {name:'AWS Graviton',type:'closed',desc:'云原生ARM服务器CPU'},
+            {name:'华为鲲鹏',type:'closed',desc:'国产ARM服务器CPU'},
+            {name:'飞腾',type:'closed',desc:'国产ARM CPU'}
+          ]},
+          {id:'riscv',name:'RISC-V',desc:'开源指令集，IoT与AI加速器',license:'open',maturity:'growing',products:[
+            {name:'RISC-V International',type:'open',desc:'开源指令集标准',url:'https://github.com/riscv',install:'',stars:'3k+'},
+            {name:'玄铁/赛昉',type:'mixed',desc:'国产RISC-V芯片厂商'}
+          ]}
+        ]},
+        {name:'AI加速芯片', modules:[
+          {id:'gpu',name:'GPU通用计算',desc:'NVIDIA/AMD，训练与推理主力',license:'closed',maturity:'mature',products:[
+            {name:'NVIDIA B200/H200',type:'closed',desc:'当前最强AI训练GPU'},
+            {name:'AMD MI300X',type:'closed',desc:'AMD AI GPU，ROCm生态'},
+            {name:'摩尔线程MTT',type:'closed',desc:'国产GPU，京东云十万卡集群'},
+            {name:'壁仞BR100',type:'closed',desc:'国产GPGPU'},
+            {name:'沐曦MXC',type:'closed',desc:'国产GPU'}
+          ]},
+          {id:'npu',name:'NPU/ASIC专用芯片',desc:'针对AI定制，能效比更高',license:'mixed',maturity:'growing',products:[
+            {name:'华为昇腾910C/950PR',type:'closed',desc:'国产NPU，910C达H100约60%性能'},
+            {name:'Google TPU v5/v6',type:'closed',desc:'Google专用AI芯片'},
+            {name:'寒武纪思元590',type:'closed',desc:'国产AI芯片，对标A100'},
+            {name:'中昊芯英"须臾"',type:'closed',desc:'第二代TPU，三维近存计算'},
+            {name:'Groq',type:'closed',desc:'美国推理专用芯片，超低延迟'}
+          ]},
+          {id:'fpga',name:'FPGA',desc:'可编程逻辑，低延迟推理与原型验证',license:'closed',maturity:'mature',products:[
+            {name:'Xilinx(AMD)',type:'closed',desc:'FPGA龙头'},
+            {name:'Intel FPGA',type:'closed',desc:'Altera系列'}
+          ]},
+          {id:'edgechip',name:'端侧AI芯片',desc:'手机/汽车/IoT端推理',license:'closed',maturity:'growing',products:[
+            {name:'高通骁龙8 Gen4',type:'closed',desc:'手机端NPU'},
+            {name:'联发科天玑',type:'closed',desc:'手机端AI芯片'},
+            {name:'地平线征程',type:'closed',desc:'国产车载AI芯片'},
+            {name:'黑芝麻华山',type:'closed',desc:'国产自动驾驶芯片'},
+            {name:'苹果A系列/M系列',type:'closed',desc:'Apple Neural Engine'}
+          ]}
+        ]}
+      ]},
+      {id:'storage', num:'3.2', title:'存储层次', desc:'从寄存器到冷存储的完整层次', color:'l3', groups:[
+        {name:'内存与高速存储', modules:[
+          {id:'hbm',name:'HBM3e/HBM4',desc:'高带宽内存，AI芯片必备',license:'closed',maturity:'mature'},
+          {id:'ddr',name:'DDR5',desc:'通用系统内存',license:'closed',maturity:'mature'},
+          {id:'cxlmem',name:'CXL内存池化',desc:'内存解耦与共享，提升利用率',license:'open',maturity:'emerging'},
+          {id:'ssd',name:'NVMe SSD',desc:'高性能固态存储，AI训练数据加载',license:'mixed',maturity:'mature',products:[
+            {name:'SPDK',type:'open',desc:'Intel开源NVMe存储性能工具包',url:'https://github.com/spdk/spdk',install:'',stars:'3k+'}
+          ]}
+        ]},
+        {name:'大容量与冷存储', modules:[
+          {id:'hdd',name:'HDD机械硬盘',desc:'大容量温冷数据存储',license:'closed',maturity:'mature'},
+          {id:'objstore',name:'对象存储',desc:'非结构化数据，AI训练数据集底座',license:'mixed',maturity:'mature',products:[
+            {name:'MinIO',type:'open',desc:'开源S3兼容对象存储',url:'https://github.com/minio/minio',install:'docker run minio/minio',stars:'45k+'},
+            {name:'Ceph',type:'open',desc:'开源分布式存储',url:'https://github.com/ceph/ceph',install:'',stars:'15k+'},
+            {name:'AWS S3/阿里云OSS',type:'closed',desc:'公有云对象存储'}
+          ]},
+          {id:'tape',name:'磁带库',desc:'极冷数据归档，最低成本',license:'closed',maturity:'mature'}
+        ]}
+      ]},
+      {id:'cluster', num:'3.3', title:'算力集群与超节点', desc:'从单机到万卡集群', color:'l3', groups:[
+        {name:'集群架构', modules:[
+          {id:'supernode',name:'AI超节点',desc:'CPU+GPU+高速互联一体化',license:'mixed',maturity:'growing',products:[
+            {name:'NVIDIA GB200 NVL72',type:'closed',desc:'72 GPU超节点，当前性能标杆'},
+            {name:'华为昇腾384超节点',type:'closed',desc:'300PFLOPS BF16，接近GB200两倍'},
+            {name:'Atlas 950 SuperPoD',type:'closed',desc:'华为液冷超节点，单柜64 NPU'}
+          ]},
+          {id:'topo',name:'互联拓扑',desc:'Fat-Tree/3D-Torus/Dragonfly',license:'open',maturity:'mature'},
+          {id:'datacenter',name:'智算中心',desc:'万卡级AI算力基础设施',license:'mixed',maturity:'growing',products:[
+            {name:'粤港澳大湾区昇腾万卡集群',type:'mixed',desc:'韶关上线，总算力9000P'},
+            {name:'中科曙光6万卡集群',type:'mixed',desc:'DeepSeek V4训练底座'}
+          ]}
+        ]},
+        {name:'集群管理', modules:[
+          {id:'hpc',name:'HPC调度',desc:'Slurm等高性能计算调度',license:'open',maturity:'mature',products:[
+            {name:'Slurm',type:'open',desc:'开源HPC作业调度系统',url:'https://github.com/SchedMD/slurm',install:'',stars:'3k+'}
+          ]},
+          {id:'k8sai',name:'K8s AI调度',desc:'GPU调度与弹性训练',license:'open',maturity:'growing',products:[
+            {name:'Kubeflow',type:'open',desc:'K8s上的ML平台',url:'https://github.com/kubeflow/kubeflow',install:'',stars:'14k+'},
+            {name:'Volcano',type:'open',desc:'云原生批量计算调度',url:'https://github.com/volcano-sh/volcano',install:'',stars:'3k+'}
+          ]}
+        ]}
+      ]},
+      {id:'power', num:'3.4', title:'供电与散热', desc:'算力的能源底座', color:'l3', groups:[
+        {name:'供电系统', modules:[
+          {id:'ups',name:'UPS不间断电源',desc:'电力保障',license:'closed',maturity:'mature'},
+          {id:'generator',name:'柴油发电机/储能',desc:'备用电源与峰谷调节',license:'closed',maturity:'mature'},
+          {id:'green',name:'绿电/算电协同',desc:'新能源直供，PUE优化',license:'mixed',maturity:'growing',products:[
+            {name:'算电协同',type:'mixed',desc:'写入2026政府工作报告，智算集群新型基建'}
+          ]}
+        ]},
+        {name:'散热系统', modules:[
+          {id:'liquid',name:'液冷',desc:'冷板式/浸没式/喷淋式',license:'mixed',maturity:'growing',products:[
+            {name:'HiAM2.0铠甲冷板',type:'closed',desc:'华为Atlas液冷方案'},
+            {name:'浸没式液冷',type:'mixed',desc:'单相/两相浸没，PUE<1.1'}
+          ]},
+          {id:'air',name:'风冷',desc:'传统散热，VCE相变方案免改造',license:'mixed',maturity:'mature'},
+          {id:'pue',name:'PUE优化',desc:'数据中心能效指标，目标<1.2',license:'open',maturity:'mature'}
+        ]}
+      ]}
+    ]
+  },
+  softdata: {
+    layers: [
+      {id:'os', num:'4.1', title:'操作系统与虚拟化', desc:'硬件资源的抽象与管理', color:'l4', groups:[
+        {name:'操作系统', modules:[
+          {id:'linux',name:'Linux发行版',desc:'服务器与AI训练主力OS',license:'open',maturity:'mature',products:[
+            {name:'Ubuntu',type:'open',desc:'最流行的AI开发Linux发行版',url:'https://ubuntu.com/',install:'',stars:''},
+            {name:'CentOS/Rocky',type:'open',desc:'企业级Linux',url:'https://rockylinux.org/',install:'',stars:''},
+            {name:'麒麟/统信UOS',type:'mixed',desc:'国产操作系统，信创主力'}
+          ]},
+          {id:'windows',name:'Windows',desc:'桌面与部分企业应用',license:'closed',maturity:'mature'},
+          {id:'mobileos',name:'移动OS',desc:'Android/iOS/鸿蒙',license:'mixed',maturity:'mature',products:[
+            {name:'Android',type:'open',desc:'Google开源移动OS',url:'https://source.android.com/',install:'',stars:''},
+            {name:'HarmonyOS NEXT',type:'mixed',desc:'华为鸿蒙，纯血鸿蒙，AI原生'},
+            {name:'iOS',type:'closed',desc:'Apple移动OS'}
+          ]},
+          {id:'rtos',name:'实时操作系统(RTOS)',desc:'嵌入式与工业控制',license:'open',maturity:'mature',products:[
+            {name:'FreeRTOS',type:'open',desc:'最流行的开源RTOS',url:'https://github.com/FreeRTOS/FreeRTOS',install:'',stars:'12k+'},
+            {name:'Zephyr',type:'open',desc:'Linux基金会RTOS',url:'https://github.com/zephyrproject-rtos/zephyr',install:'',stars:'10k+'},
+            {name:'VxWorks',type:'closed',desc:'工业级RTOS'}
+          ]}
+        ]},
+        {name:'虚拟化与容器', modules:[
+          {id:'container',name:'容器运行时',desc:'Docker/containerd，应用打包标准',license:'open',maturity:'mature',products:[
+            {name:'Docker',type:'open',desc:'最流行的容器平台',url:'https://github.com/docker',install:'',stars:'68k+'},
+            {name:'containerd',type:'open',desc:'CNCF容器运行时标准',url:'https://github.com/containerd/containerd',install:'',stars:'18k+'}
+          ]},
+          {id:'k8s',name:'Kubernetes',desc:'容器编排事实标准',license:'open',maturity:'mature',products:[
+            {name:'Kubernetes',type:'open',desc:'容器编排系统',url:'https://github.com/kubernetes/kubernetes',install:'',stars:'110k+'},
+            {name:'K3s',type:'open',desc:'轻量级K8s，边缘场景',url:'https://github.com/k3s-io/k3s',install:'',stars:'25k+'}
+          ]},
+          {id:'vm',name:'虚拟机/hypervisor',desc:'KVM/VMware，资源隔离',license:'mixed',maturity:'mature',products:[
+            {name:'KVM',type:'open',desc:'Linux内核虚拟化',url:'https://www.linux-kvm.org/',install:'',stars:''},
+            {name:'VMware vSphere',type:'closed',desc:'企业级虚拟化'}
+          ]},
+          {id:'servicemesh',name:'服务网格',desc:'微服务通信治理',license:'open',maturity:'growing',products:[
+            {name:'Istio',type:'open',desc:'最流行的服务网格',url:'https://github.com/istio/istio',install:'',stars:'35k+'},
+            {name:'Linkerd',type:'open',desc:'轻量级服务网格',url:'https://github.com/linkerd/linkerd2',install:'',stars:'10k+'}
+          ]}
+        ]}
+      ]},
+      {id:'db', num:'4.2', title:'数据库全景', desc:'结构化与非结构化数据存储', color:'l4', groups:[
+        {name:'关系型数据库', modules:[
+          {id:'rdb',name:'关系型数据库',desc:'事务处理，企业核心系统',license:'mixed',maturity:'mature',products:[
+            {name:'MySQL',type:'open',desc:'最流行开源关系型数据库',url:'https://github.com/mysql/mysql-server',install:'',stars:'20k+'},
+            {name:'PostgreSQL',type:'open',desc:'功能最强开源数据库',url:'https://github.com/postgres/postgres',install:'',stars:'15k+'},
+            {name:'OceanBase',type:'open',desc:'国产分布式关系型数据库',url:'https://github.com/oceanbase/oceanbase',install:'',stars:'8k+'},
+            {name:'Oracle',type:'closed',desc:'企业级数据库龙头'}
+          ]}
+        ]},
+        {name:'NoSQL数据库', modules:[
+          {id:'kv',name:'键值/缓存数据库',desc:'Redis，高性能缓存',license:'open',maturity:'mature',products:[
+            {name:'Redis',type:'open',desc:'内存键值数据库',url:'https://github.com/redis/redis',install:'',stars:'65k+'},
+            {name:'KeyDB',type:'open',desc:'Redis多线程分支',url:'https://github.com/Snapchat/KeyDB',install:'',stars:'10k+'}
+          ]},
+          {id:'doc',name:'文档数据库',desc:'MongoDB，灵活Schema',license:'open',maturity:'mature',products:[
+            {name:'MongoDB',type:'open',desc:'最流行文档数据库',url:'https://github.com/mongodb/mongo',install:'',stars:'25k+'}
+          ]},
+          {id:'wide',name:'宽列数据库',desc:'Cassandra/HBase，海量写入',license:'open',maturity:'mature'},
+          {id:'tsdb',name:'时序数据库',desc:'IoT与监控数据',license:'open',maturity:'growing',products:[
+            {name:'InfluxDB',type:'open',desc:'流行时序数据库',url:'https://github.com/influxdata/influxdb',install:'',stars:'28k+'},
+            {name:'TDengine',type:'open',desc:'国产高性能时序数据库',url:'https://github.com/taosdata/TDengine',install:'',stars:'25k+'},
+            {name:'Prometheus',type:'open',desc:'监控时序数据库',url:'https://github.com/prometheus/prometheus',install:'',stars:'55k+'}
+          ]}
+        ]},
+        {name:'AI专用数据库', modules:[
+          {id:'vector',name:'向量数据库',desc:'Embedding存储与相似度检索，RAG核心',license:'mixed',maturity:'hot',products:[
+            {name:'Milvus',type:'open',desc:'开源向量数据库，云原生',url:'https://github.com/milvus-io/milvus',install:'docker run milvusdb/milvus',stars:'30k+'},
+            {name:'Qdrant',type:'open',desc:'Rust编写的高性能向量数据库',url:'https://github.com/qdrant/qdrant',install:'pip install qdrant-client',stars:'20k+'},
+            {name:'Weaviate',type:'open',desc:'开源向量搜索引擎',url:'https://github.com/weaviate/weaviate',install:'',stars:'12k+'},
+            {name:'Chroma',type:'open',desc:'轻量级向量数据库，AI应用首选',url:'https://github.com/chroma-core/chroma',install:'pip install chromadb',stars:'18k+'},
+            {name:'Pinecone',type:'closed',desc:'全托管向量数据库服务'}
+          ]},
+          {id:'graph',name:'图数据库',desc:'知识图谱与关系推理',license:'mixed',maturity:'growing',products:[
+            {name:'Neo4j',type:'open',desc:'最流行图数据库',url:'https://github.com/neo4j/neo4j',install:'',stars:'12k+'},
+            {name:'NebulaGraph',type:'open',desc:'国产分布式图数据库',url:'https://github.com/vesoft-inc/nebula',install:'',stars:'10k+'}
+          ]},
+          {id:'olap',name:'分析型数据库',desc:'ClickHouse/Doris，大数据分析',license:'open',maturity:'mature',products:[
+            {name:'ClickHouse',type:'open',desc:'最快OLAP数据库',url:'https://github.com/ClickHouse/ClickHouse',install:'',stars:'35k+'},
+            {name:'Apache Doris',type:'open',desc:'国产MPP分析数据库',url:'https://github.com/apache/doris',install:'',stars:'12k+'}
+          ]}
+        ]}
+      ]},
+      {id:'middleware', num:'4.3', title:'中间件与文件系统', desc:'分布式系统粘合剂', color:'l4', groups:[
+        {name:'消息与集成', modules:[
+          {id:'mq',name:'消息队列',desc:'异步解耦，事件驱动',license:'open',maturity:'mature',products:[
+            {name:'Apache Kafka',type:'open',desc:'高吞吐分布式消息流',url:'https://github.com/apache/kafka',install:'',stars:'28k+'},
+            {name:'RabbitMQ',type:'open',desc:'可靠消息代理',url:'https://github.com/rabbitmq/rabbitmq-server',install:'',stars:'12k+'},
+            {name:'Apache Pulsar',type:'open',desc:'云原生消息流平台',url:'https://github.com/apache/pulsar',install:'',stars:'15k+'}
+          ]},
+          {id:'apigw',name:'API网关',desc:'流量入口与治理',license:'open',maturity:'mature',products:[
+            {name:'Kong',type:'open',desc:'云原生API网关',url:'https://github.com/Kong/kong',install:'',stars:'38k+'},
+            {name:'APISIX',type:'open',desc:'国产高性能API网关',url:'https://github.com/apache/apisix',install:'',stars:'15k+'}
+          ]},
+          {id:'coord',name:'分布式协调',desc:'etcd/ZooKeeper，配置与选主',license:'open',maturity:'mature',products:[
+            {name:'etcd',type:'open',desc:'K8s背后的分布式KV存储',url:'https://github.com/etcd-io/etcd',install:'',stars:'48k+'}
+          ]}
+        ]},
+        {name:'文件系统', modules:[
+          {id:'dfs',name:'分布式文件系统',desc:'HDFS/Ceph，大数据存储',license:'open',maturity:'mature',products:[
+            {name:'HDFS',type:'open',desc:'Hadoop分布式文件系统',url:'https://github.com/apache/hadoop',install:'',stars:'15k+'},
+            {name:'CephFS',type:'open',desc:'Ceph分布式文件系统',url:'https://github.com/ceph/ceph',install:'',stars:'15k+'}
+          ]},
+          {id:'parallelfs',name:'并行文件系统',desc:'Lustre/GPFS，HPC与AI训练',license:'mixed',maturity:'mature',products:[
+            {name:'Lustre',type:'open',desc:'HPC并行文件系统',url:'https://github.com/lustre/lustre',install:'',stars:'500+'},
+            {name:'GPFS',type:'closed',desc:'IBM并行文件系统'}
+          ]}
+        ]}
+      ]},
+      {id:'datapipe', num:'5.1', title:'数据采集与处理', desc:'从原始数据到可用数据', color:'l5', groups:[
+        {name:'数据采集', modules:[
+          {id:'etl',name:'ETL/ELT',desc:'数据抽取转换加载',license:'open',maturity:'mature',products:[
+            {name:'Apache Spark',type:'open',desc:'大数据处理引擎',url:'https://github.com/apache/spark',install:'pip install pyspark',stars:'40k+'},
+            {name:'Airflow',type:'open',desc:'数据工作流调度',url:'https://github.com/apache/airflow',install:'pip install apache-airflow',stars:'35k+'},
+            {name:'dbt',type:'open',desc:'数据转换工具',url:'https://github.com/dbt-labs/dbt-core',install:'pip install dbt-core',stars:'10k+'},
+            {name:'Flink CDC',type:'open',desc:'变更数据捕获',url:'https://github.com/ververica/flink-cdc-connectors',install:'',stars:'5k+'}
+          ]},
+          {id:'log',name:'日志采集',desc:'Flume/Filebeat/Fluentd',license:'open',maturity:'mature',products:[
+            {name:'Fluent Bit',type:'open',desc:'轻量级日志处理器',url:'https://github.com/fluent/fluent-bit',install:'',stars:'5k+'},
+            {name:'Filebeat',type:'open',desc:'Elastic日志采集器',url:'https://github.com/elastic/beats',install:'',stars:'12k+'}
+          ]}
+        ]},
+        {name:'数据存储与处理', modules:[
+          {id:'datalake',name:'数据湖',desc:'Iceberg/Hudi/Delta Lake，湖仓一体',license:'open',maturity:'growing',products:[
+            {name:'Apache Iceberg',type:'open',desc:'开放表格式，湖仓一体',url:'https://github.com/apache/iceberg',install:'',stars:'7k+'},
+            {name:'Delta Lake',type:'open',desc:'Databricks开源表格式',url:'https://github.com/delta-io/delta',install:'',stars:'7k+'},
+            {name:'Apache Hudi',type:'open',desc:'增量数据湖框架',url:'https://github.com/apache/hudi',install:'',stars:'5k+'}
+          ]},
+          {id:'stream',name:'流处理',desc:'Flink，实时计算',license:'open',maturity:'mature',products:[
+            {name:'Apache Flink',type:'open',desc:'流批一体计算引擎',url:'https://github.com/apache/flink',install:'',stars:'25k+'}
+          ]}
+        ]}
+      ]},
+      {id:'datagov', num:'5.2', title:'数据治理与隐私计算', desc:'数据质量与安全合规', color:'l5', groups:[
+        {name:'数据治理', modules:[
+          {id:'quality',name:'数据质量',desc:'完整性/准确性/一致性检测',license:'open',maturity:'growing',products:[
+            {name:'Great Expectations',type:'open',desc:'数据质量验证框架',url:'https://github.com/great-expectations/great_expectations',install:'pip install great-expectations',stars:'9k+'},
+            {name:'Apache Griffin',type:'open',desc:'大数据质量解决方案',url:'https://github.com/apache/griffin',install:'',stars:'1k+'}
+          ]},
+          {id:'metadata',name:'元数据管理',desc:'数据目录与血缘',license:'open',maturity:'growing',products:[
+            {name:'DataHub',type:'open',desc:'LinkedIn开源元数据平台',url:'https://github.com/datahub-project/datahub',install:'',stars:'9k+'},
+            {name:'OpenMetadata',type:'open',desc:'开源元数据管理',url:'https://github.com/open-metadata/OpenMetadata',install:'',stars:'5k+'}
+          ]}
+        ]},
+        {name:'隐私计算', modules:[
+          {id:'federated',name:'联邦学习',desc:'数据不出域，联合建模',license:'open',maturity:'growing',products:[
+            {name:'FATE',type:'open',desc:'微众银行开源联邦学习框架',url:'https://github.com/FederatedAI/FATE',install:'',stars:'8k+'},
+            {name:'Flower',type:'open',desc:'轻量级联邦学习框架',url:'https://github.com/adap/flower',install:'pip install flwr',stars:'5k+'},
+            {name:'FedML',type:'open',desc:'联邦学习与边缘AI',url:'https://github.com/FedML-AI/FedML',install:'',stars:'3k+'}
+          ]},
+          {id:'dp',name:'差分隐私',desc:'数据脱敏与隐私保护',license:'open',maturity:'growing',products:[
+            {name:'Opacus',type:'open',desc:'PyTorch差分隐私训练库',url:'https://github.com/pytorch/opacus',install:'pip install opacus',stars:'4k+'},
+            {name:'Google DP',type:'open',desc:'Google差分隐私库',url:'https://github.com/google/differential-privacy',install:'',stars:'3k+'}
+          ]},
+          {id:'tee',name:'可信执行环境(TEE)',desc:'硬件级安全计算',license:'mixed',maturity:'growing',products:[
+            {name:'Intel SGX/TDX',type:'closed',desc:'Intel可信执行环境'},
+            {name:'ARM TrustZone/CCA',type:'mixed',desc:'ARM安全区'},
+            {name:'Inclavare Containers',type:'open',desc:'机密容器运行时',url:'https://github.com/alibaba/inclavare-containers',install:'',stars:'1k+'}
+          ]},
+          {id:'he',name:'同态加密/安全多方计算',desc:'密文计算',license:'open',maturity:'emerging',products:[
+            {name:'SEAL',type:'open',desc:'微软同态加密库',url:'https://github.com/microsoft/SEAL',install:'',stars:'3k+'},
+            {name:'MP-SPDZ',type:'open',desc:'安全多方计算框架',url:'https://github.com/data61/MP-SPDZ',install:'',stars:'1k+'}
+          ]}
+        ]}
+      ]},
+      {id:'feature', num:'5.3', title:'特征工程与数据集', desc:'AI模型的数据燃料', color:'l5', groups:[
+        {name:'特征工程', modules:[
+          {id:'featurestore',name:'特征存储',desc:'特征的统一存储与在线服务',license:'open',maturity:'growing',products:[
+            {name:'Feast',type:'open',desc:'开源特征存储',url:'https://github.com/feast-dev/feast',install:'pip install feast',stars:'5k+'},
+            {name:'Tecton',type:'closed',desc:'商业特征平台'}
+          ]},
+          {id:'embedding',name:'Embedding服务',desc:'向量编码与检索',license:'open',maturity:'hot',products:[
+            {name:'text-embedding-inference',type:'open',desc:'HuggingFace推理服务',url:'https://github.com/huggingface/text-embeddings-inference',install:'',stars:'3k+'},
+            {name:'BGE/M3E',type:'open',desc:'开源中文Embedding模型',url:'https://github.com/FlagOpen/FlagEmbedding',install:'',stars:'5k+'}
+          ]}
+        ]},
+        {name:'数据集管理', modules:[
+          {id:'dataset',name:'数据集管理',desc:'训练/测试/验证集版本管理',license:'open',maturity:'growing',products:[
+            {name:'DVC',type:'open',desc:'数据版本控制',url:'https://github.com/iterative/dvc',install:'pip install dvc',stars:'15k+'},
+            {name:'HuggingFace Datasets',type:'open',desc:'NLP数据集库',url:'https://github.com/huggingface/datasets',install:'pip install datasets',stars:'18k+'},
+            {name:'FiftyOne',type:'open',desc:'计算机视觉数据集管理',url:'https://github.com/voxel51/fiftyone',install:'pip install fiftyone',stars:'5k+'}
+          ]},
+          {id:'annotation',name:'数据标注平台',desc:'人机协同标注',license:'mixed',maturity:'mature',products:[
+            {name:'Label Studio',type:'open',desc:'最流行开源标注平台',url:'https://github.com/HumanSignal/label-studio',install:'pip install label-studio',stars:'18k+'},
+            {name:'CVAT',type:'open',desc:'计算机视觉标注工具',url:'https://github.com/cvat-ai/cvat',install:'',stars:'12k+'},
+            {name:'Scale AI',type:'closed',desc:'商业数据标注服务'}
+          ]},
+          {id:'synth',name:'合成数据',desc:'AI生成训练数据，解决数据稀缺',license:'open',maturity:'growing',products:[
+            {name:'Gretel',type:'open',desc:'合成数据生成平台',url:'https://github.com/gretelai/gretel-synthetics',install:'',stars:'1k+'},
+            {name:'SDV',type:'open',desc:'合成数据 vault',url:'https://github.com/sdv-dev/SDV',install:'pip install sdv',stars:'2k+'}
+          ]}
+        ]}
+      ]}
+    ]
+  },
+  aimodel: {
+    layers: [
+      {id:'basemodel', num:'6.1', title:'基础模型族', desc:'AI能力的核心引擎', color:'l6', groups:[
+        {name:'大语言模型(LLM)', modules:[
+          {id:'llm',name:'通用大语言模型',desc:'文本理解与生成，AI核心',license:'mixed',maturity:'hot',products:[
+            {name:'GPT-4o/GPT-5',type:'closed',desc:'OpenAI旗舰模型'},
+            {name:'Claude 3.5/4',type:'closed',desc:'Anthropic，长上下文与安全'},
+            {name:'Gemini 3.8',type:'closed',desc:'Google，多模态强'},
+            {name:'Llama 3/4',type:'open',desc:'Meta开源旗舰',url:'https://github.com/meta-llama/llama',install:'',stars:'200k+'},
+            {name:'DeepSeek V4',type:'open',desc:'国产开源，1.6万亿参数MoE',url:'https://github.com/deepseek-ai',install:'',stars:'50k+'},
+            {name:'Qwen3',type:'open',desc:'阿里通义千问开源',url:'https://github.com/QwenLM/Qwen',install:'',stars:'40k+'},
+            {name:'文心5.0',type:'mixed',desc:'百度，国内首位'},
+            {name:'Kimi K3',type:'mixed',desc:'月之暗面，104.8万token上下文'},
+            {name:'豆包',type:'mixed',desc:'字节跳动'}
+          ]},
+          {id:'codellm',name:'代码大模型',desc:'编程辅助与代码生成',license:'open',maturity:'hot',products:[
+            {name:'DeepSeek-Coder V2',type:'open',desc:'最强开源代码模型',url:'https://github.com/deepseek-ai/DeepSeek-Coder',install:'',stars:'15k+'},
+            {name:'Qwen3-Coder-Next',type:'open',desc:'阿里代码模型升级版',url:'https://github.com/QwenLM/Qwen',install:'',stars:'40k+'},
+            {name:'StarCoder2',type:'open',desc:'BigCode开源代码模型',url:'https://github.com/bigcode-project/starcoder2',install:'',stars:'5k+'},
+            {name:'Codex',type:'closed',desc:'OpenAI代码模型，GitHub Copilot底座'}
+          ]}
+        ]},
+        {name:'多模态模型', modules:[
+          {id:'vlm',name:'视觉语言模型(VLM)',desc:'图文理解与推理',license:'open',maturity:'hot',products:[
+            {name:'GPT-4o',type:'closed',desc:'OpenAI原生多模态'},
+            {name:'Gemini',type:'closed',desc:'Google多模态旗舰'},
+            {name:'LLaVA',type:'open',desc:'开源视觉语言模型',url:'https://github.com/haotian-liu/LLaVA',install:'',stars:'15k+'},
+            {name:'Qwen-VL',type:'open',desc:'阿里开源多模态',url:'https://github.com/QwenLM/Qwen-VL',install:'',stars:'8k+'},
+            {name:'InternVL',type:'open',desc:'上海AI Lab开源VLM',url:'https://github.com/OpenGVLab/InternVL',install:'',stars:'8k+'}
+          ]},
+          {id:'tts',name:'语音模型',desc:'语音识别与合成',license:'open',maturity:'mature',products:[
+            {name:'Whisper',type:'open',desc:'OpenAI开源语音识别',url:'https://github.com/openai/whisper',install:'pip install openai-whisper',stars:'65k+'},
+            {name:'FunASR',type:'open',desc:'阿里开源语音识别',url:'https://github.com/modelscope/FunASR',install:'',stars:'5k+'},
+            {name:'Coqui TTS',type:'open',desc:'开源语音合成',url:'https://github.com/coqui-ai/TTS',install:'pip install TTS',stars:'30k+'},
+            {name:'Bark',type:'open',desc:'生成式语音合成',url:'https://github.com/suno-ai/bark',install:'pip install bark',stars:'30k+'}
+          ]},
+          {id:'imagegen',name:'图像生成模型',desc:'文生图/图生图',license:'mixed',maturity:'hot',products:[
+            {name:'Stable Diffusion 3',type:'open',desc:'Stability AI开源',url:'https://github.com/Stability-AI/stablediffusion',install:'',stars:'35k+'},
+            {name:'FLUX',type:'open',desc:'Black Forest Labs开源',url:'https://github.com/black-forest-labs/flux',install:'',stars:'10k+'},
+            {name:'Midjourney',type:'closed',desc:'商业图像生成标杆'},
+            {name:'DALL-E 3',type:'closed',desc:'OpenAI图像生成'}
+          ]},
+          {id:'videogen',name:'视频生成模型',desc:'文生视频/图生视频',license:'mixed',maturity:'hot',products:[
+            {name:'Sora 2.0',type:'closed',desc:'OpenAI物理级视频生成'},
+            {name:'可灵3.0 Pro',type:'mixed',desc:'快手，全球基准测试领先'},
+            {name:'Veo 3',type:'closed',desc:'Google视频生成'},
+            {name:'Seedance 2.0',type:'mixed',desc:'字节跳动，音画同步'},
+            {name:'Vivago R1',type:'mixed',desc:'智象未来，5分钟长视频'},
+            {name:'AnimateDiff',type:'open',desc:'开源视频生成框架',url:'https://github.com/guoyww/AnimateDiff',install:'',stars:'12k+'}
+          ]}
+        ]},
+        {name:'具身智能模型', modules:[
+          {id:'vla',name:'VLA模型',desc:'视觉-语言-动作端到端，机器人核心',license:'mixed',maturity:'hot',products:[
+            {name:'OpenVLA',type:'open',desc:'开源视觉语言动作模型',url:'https://github.com/openvla/openvla',install:'',stars:'3k+'},
+            {name:'RT-2',type:'closed',desc:'Google机器人视觉语言动作模型'},
+            {name:'智元GO-2',type:'closed',desc:'动作思维链+异步双系统'},
+            {name:'蚂蚁灵波',type:'mixed',desc:'通用机器人大脑'}
+          ]},
+          {id:'worldmodel',name:'世界模型',desc:'物理世界仿真与预测，下一代范式',license:'mixed',maturity:'hot',products:[
+            {name:'Genie 3',type:'closed',desc:'DeepMind世界模型'},
+            {name:'混元1.5',type:'mixed',desc:'腾讯世界模型'},
+            {name:'Marble',type:'open',desc:'开源世界模型',url:'https://github.com/marble-ai',install:'',stars:''},
+            {name:'李飞飞Atlas',type:'mixed',desc:'空间上下文三维构建'}
+          ]}
+        ]}
+      ]},
+      {id:'training', num:'6.2', title:'训练技术', desc:'从预训练到对齐', color:'l6', groups:[
+        {name:'预训练与微调', modules:[
+          {id:'pretrain',name:'预训练',desc:'大规模无监督/自监督学习',license:'open',maturity:'mature',products:[
+            {name:'Megatron-LM',type:'open',desc:'NVIDIA大规模预训练框架',url:'https://github.com/NVIDIA/Megatron-LM',install:'',stars:'8k+'},
+            {name:'DeepSpeed',type:'open',desc:'微软分布式训练框架',url:'https://github.com/microsoft/DeepSpeed',install:'pip install deepspeed',stars:'35k+'},
+            {name:'ColossalAI',type:'open',desc:'国产大模型训练系统',url:'https://github.com/hpcaitech/ColossalAI',install:'pip install colossalai',stars:'12k+'}
+          ]},
+          {id:'sft',name:'监督微调(SFT)',desc:'指令跟随能力训练',license:'open',maturity:'mature',products:[
+            {name:'LLaMA-Factory',type:'open',desc:'最流行的LLM微调框架',url:'https://github.com/hiyouga/LLaMA-Factory',install:'pip install llamafactory',stars:'30k+'},
+            {name:'Axolotl',type:'open',desc:'LLM微调工具',url:'https://github.com/axolotl-ai-cloud/axolotl',install:'',stars:'5k+'},
+            {name:'PEFT',type:'open',desc:'参数高效微调库',url:'https://github.com/huggingface/peft',install:'pip install peft',stars:'15k+'}
+          ]},
+          {id:'rlhf',name:'RLHF/DPO对齐',desc:'人类反馈强化学习，价值观对齐',license:'open',maturity:'growing',products:[
+            {name:'TRL',type:'open',desc:'HuggingFace强化学习库',url:'https://github.com/huggingface/trl',install:'pip install trl',stars:'10k+'},
+            {name:'DPO',type:'open',desc:'直接偏好优化实现',url:'https://github.com/eric-mitchell/dpo',install:'',stars:'2k+'}
+          ]},
+          {id:'continual',name:'持续学习',desc:'知识更新与灾难性遗忘',license:'open',maturity:'emerging'}
+        ]}
+      ]},
+      {id:'inference', num:'6.3', title:'推理优化技术', desc:'让模型更快更便宜', color:'l6', groups:[
+        {name:'模型压缩', modules:[
+          {id:'quant',name:'模型量化',desc:'INT4/INT8/GPTQ/AWQ，降低显存',license:'open',maturity:'hot',products:[
+            {name:'AutoGPTQ',type:'open',desc:'GPTQ量化库',url:'https://github.com/AutoGPTQ/AutoGPTQ',install:'pip install auto-gptq',stars:'6k+'},
+            {name:'AWQ',type:'open',desc:'激活感知权重量化',url:'https://github.com/mit-han-lab/llm-awq',install:'',stars:'3k+'},
+            {name:'llama.cpp',type:'open',desc:'CPU端4-bit量化推理',url:'https://github.com/ggerganov/llama.cpp',install:'',stars:'70k+'}
+          ]},
+          {id:'distill',name:'知识蒸馏',desc:'大模型教小模型',license:'open',maturity:'growing'},
+          {id:'prune',name:'模型剪枝',desc:'移除冗余参数',license:'open',maturity:'growing'}
+        ]},
+        {name:'推理加速', modules:[
+          {id:'kvcache',name:'KV缓存优化',desc:'长上下文推理核心瓶颈',license:'open',maturity:'hot',products:[
+            {name:'PagedAttention',type:'open',desc:'vLLM核心技术，分页KV缓存',url:'https://github.com/vllm-project/vllm',install:'',stars:'30k+'},
+            {name:'MQA/GQA',type:'open',desc:'多查询/分组查询注意力'}
+          ]},
+          {id:'moe',name:'MoE动态路由',desc:'混合专家，激活部分参数',license:'open',maturity:'hot',products:[
+            {name:'Mixtral',type:'open',desc:'Mistral开源MoE模型',url:'https://github.com/mistralai/mistral-src',install:'',stars:'5k+'},
+            {name:'DeepSeek MoE',type:'open',desc:'国产MoE架构'}
+          ]},
+          {id:'specdec',name:'投机解码',desc:'小模型草稿+大模型验证',license:'open',maturity:'growing',products:[
+            {name:'Medusa',type:'open',desc:'投机解码框架',url:'https://github.com/FasterDecoding/Medusa',install:'',stars:'2k+'}
+          ]},
+          {id:'serving',name:'推理服务框架',desc:'高吞吐模型服务',license:'open',maturity:'hot',products:[
+            {name:'vLLM',type:'open',desc:'最高吞吐LLM推理引擎',url:'https://github.com/vllm-project/vllm',install:'pip install vllm',stars:'30k+'},
+            {name:'SGLang',type:'open',desc:'结构化生成推理引擎',url:'https://github.com/sgl-project/sglang',install:'pip install sglang',stars:'8k+'},
+            {name:'Triton Inference Server',type:'open',desc:'NVIDIA推理服务',url:'https://github.com/triton-inference-server/server',install:'',stars:'10k+'},
+            {name:'TensorRT-LLM',type:'open',desc:'NVIDIA GPU推理优化',url:'https://github.com/NVIDIA/TensorRT-LLM',install:'',stars:'5k+'},
+            {name:'Ollama',type:'open',desc:'本地大模型一键运行',url:'https://github.com/ollama/ollama',install:'curl install.ollama.com',stars:'90k+'},
+            {name:'LMDeploy',type:'open',desc:'国产推理引擎',url:'https://github.com/InternLM/lmdeploy',install:'pip install lmdeploy',stars:'5k+'}
+          ]}
+        ]}
+      ]},
+      {id:'rag', num:'6.4', title:'RAG检索增强生成', desc:'外部知识注入，解决幻觉', color:'l6', groups:[
+        {name:'RAG技术栈', modules:[
+          {id:'basicrag',name:'基础RAG',desc:'向量检索+生成',license:'open',maturity:'mature',products:[
+            {name:'LangChain',type:'open',desc:'最流行LLM应用框架',url:'https://github.com/langchain-ai/langchain',install:'pip install langchain',stars:'90k+'},
+            {name:'LlamaIndex',type:'open',desc:'数据框架，RAG专精',url:'https://github.com/run-llama/llama_index',install:'pip install llama-index',stars:'35k+'},
+            {name:'Haystack',type:'open',desc:'开源NLP/RAG框架',url:'https://github.com/deepset-ai/haystack',install:'pip install haystack-ai',stars:'15k+'}
+          ]},
+          {id:'graphrag',name:'Graph RAG',desc:'知识图谱增强检索',license:'open',maturity:'hot',products:[
+            {name:'GraphRAG',type:'open',desc:'微软开源图谱RAG',url:'https://github.com/microsoft/graphrag',install:'pip install graphrag',stars:'20k+'},
+            {name:'LightRAG',type:'open',desc:'轻量级图谱RAG',url:'https://github.com/HKUDS/LightRAG',install:'',stars:'10k+'}
+          ]},
+          {id:'multimodalrag',name:'多模态RAG',desc:'图文混合检索',license:'open',maturity:'growing'},
+          {id:'adaptiverag',name:'自适应/Agentic RAG',desc:'智能检索策略选择',license:'open',maturity:'growing',products:[
+            {name:'Self-RAG',type:'open',desc:'自适应检索框架',url:'https://github.com/AkariAsai/self-rag',install:'',stars:'2k+'}
+          ]},
+          {id:'rerank',name:'重排序(Reranker)',desc:'检索结果精排',license:'open',maturity:'mature',products:[
+            {name:'bge-reranker',type:'open',desc:'开源重排序模型',url:'https://github.com/FlagOpen/FlagEmbedding',install:'',stars:'5k+'},
+            {name:'Cohere Rerank',type:'closed',desc:'商业重排序API'}
+          ]}
+        ]}
+      ]},
+      {id:'safety', num:'6.5', title:'安全与对齐', desc:'让AI安全可控', color:'l6', groups:[
+        {name:'模型安全', modules:[
+          {id:'guardrail',name:'安全护栏',desc:'输入输出过滤与防护',license:'open',maturity:'growing',products:[
+            {name:'NeMo Guardrails',type:'open',desc:'NVIDIA开源LLM安全护栏',url:'https://github.com/NVIDIA/NeMo-Guardrails',install:'pip install nemoguardrails',stars:'5k+'},
+            {name:'LLM Guard',type:'open',desc:'LLM安全扫描工具',url:'https://github.com/protectai/llm-guard',install:'pip install llm-guard',stars:'3k+'}
+          ]},
+          {id:'redteam',name:'红队测试',desc:'越狱与对抗测试',license:'open',maturity:'growing',products:[
+            {name:'Garak',type:'open',desc:'LLM漏洞扫描器',url:'https://github.com/NVIDIA/garak',install:'pip install garak',stars:'2k+'},
+            {name:'Promptfoo',type:'open',desc:'LLM红队测试平台',url:'https://github.com/promptfoo/promptfoo',install:'npm install -g promptfoo',stars:'5k+'}
+          ]},
+          {id:'interp',name:'可解释性',desc:'模型内部机制理解',license:'open',maturity:'emerging',products:[
+            {name:'TransformerLens',type:'open',desc:'Transformer可解释性库',url:'https://github.com/neelnanda-io/TransformerLens',install:'',stars:'2k+'}
+          ]}
+        ]}
+      ]}
+    ]
+  },
+  aieng: {
+    layers: [
+      {id:'harness', num:'7.1', title:'Harness Engineering（驾驭工程）', desc:'Agent = Model + Harness · 不改造模型，管控运行', color:'l7', groups:[
+        {name:'Harness六层架构', modules:[
+          {id:'loop',name:'循环层(Loop)',desc:'观察-决策-行动-验证-更新闭环',license:'open',maturity:'hot',products:[
+            {name:'LangGraph',type:'open',desc:'状态机驱动的Agent循环框架',url:'https://github.com/langchain-ai/langgraph',install:'pip install langgraph',stars:'10k+'},
+            {name:'AutoGen',type:'open',desc:'微软多Agent对话框架',url:'https://github.com/microsoft/autogen',install:'pip install pyautogen',stars:'35k+'}
+          ]},
+          {id:'toollayer',name:'工具层(Tool)',desc:'工具调用与能力扩展',license:'open',maturity:'hot',products:[
+            {name:'MCP',type:'open',desc:'模型上下文协议，AI的USB接口',url:'https://github.com/modelcontextprotocol',install:'npm install @modelcontextprotocol/sdk',stars:'10k+'},
+            {name:'Function Calling',type:'open',desc:'OpenAI标准工具调用'}
+          ]},
+          {id:'memorylayer',name:'记忆层(Memory)',desc:'短期/长期/向量/知识图谱记忆',license:'open',maturity:'growing',products:[
+            {name:'Mem0',type:'open',desc:'AI记忆层',url:'https://github.com/mem0ai/mem0',install:'pip install mem0ai',stars:'15k+'},
+            {name:'Zep',type:'open',desc:'长期记忆服务',url:'https://github.com/getzep/zep',install:'',stars:'3k+'}
+          ]},
+          {id:'guardraillayer',name:'安全层(Guardrail)',desc:'约束规则与防护机制',license:'open',maturity:'growing',products:[
+            {name:'NeMo Guardrails',type:'open',desc:'NVIDIA安全护栏',url:'https://github.com/NVIDIA/NeMo-Guardrails',install:'',stars:'5k+'},
+            {name:'Guardrails AI',type:'open',desc:'输出验证与护栏',url:'https://github.com/guardrails-ai/guardrails',install:'pip install guardrails-ai',stars:'4k+'}
+          ]},
+          {id:'obslayer',name:'观测层(Observability)',desc:'追踪、监控、成本分析',license:'open',maturity:'growing',products:[
+            {name:'LangSmith',type:'mixed',desc:'LangChain官方LLM可观测平台'},
+            {name:'Langfuse',type:'open',desc:'开源LLM可观测平台',url:'https://github.com/langfuse/langfuse',install:'',stars:'10k+'},
+            {name:'Phoenix',type:'open',desc:'Arize开源LLM观测',url:'https://github.com/Arize-ai/phoenix',install:'pip install arize-phoenix',stars:'5k+'},
+            {name:'Honeycomb',type:'closed',desc:'企业级可观测平台'}
+          ]},
+          {id:'evolayer',name:'进化层(Evolution)',desc:'自我改进与持续学习',license:'open',maturity:'emerging'}
+        ]}
+      ]},
+      {id:'agentfw', num:'7.2', title:'Agent框架生态', desc:'八大主流框架竞争', color:'l7', groups:[
+        {name:'通用Agent框架', modules:[
+          {id:'langgraph',name:'LangGraph',desc:'状态机驱动，工业级工作流',license:'open',maturity:'hot',products:[
+            {name:'LangGraph',type:'open',desc:'LangChain团队出品',url:'https://github.com/langchain-ai/langgraph',install:'pip install langgraph',stars:'10k+'}
+          ]},
+          {id:'crewai',name:'CrewAI',desc:'多Agent角色协作',license:'open',maturity:'hot',products:[
+            {name:'CrewAI',type:'open',desc:'角色分工多Agent框架',url:'https://github.com/crewAIInc/crewAI',install:'pip install crewai',stars:'25k+'}
+          ]},
+          {id:'autogen',name:'AutoGen',desc:'微软多Agent对话',license:'open',maturity:'hot',products:[
+            {name:'AutoGen',type:'open',desc:'微软多Agent框架',url:'https://github.com/microsoft/autogen',install:'pip install pyautogen',stars:'35k+'}
+          ]},
+          {id:'magnetic',name:'Magnetic-One',desc:'微软复杂任务编排',license:'open',maturity:'growing',products:[
+            {name:'Magnetic-One',type:'open',desc:'微软多Agent任务编排',url:'https://github.com/microsoft/magnetic-one',install:'',stars:'3k+'}
+          ]},
+          {id:'openclaw',name:'OpenClaw',desc:'本地优先，GitHub 315K+星',license:'open',maturity:'hot',products:[
+            {name:'OpenClaw',type:'open',desc:'前ClawdBot，本地优先Agent框架',url:'https://github.com/openclaw/openclaw',install:'',stars:'315k+'}
+          ]},
+          {id:'hermes',name:'Hermes Agent',desc:'新一代智能体框架',license:'open',maturity:'growing',products:[
+            {name:'Hermes',type:'open',desc:'Python 3.11+uv部署',url:'https://github.com/NousResearch/Hermes-Function-Calling',install:'',stars:'2k+'}
+          ]},
+          {id:'semantickernel',name:'Semantic Kernel',desc:'微软企业级AI编排',license:'open',maturity:'growing',products:[
+            {name:'Semantic Kernel',type:'open',desc:'微软AI编排SDK',url:'https://github.com/microsoft/semantic-kernel',install:'pip install semantic-kernel',stars:'20k+'}
+          ]},
+          {id:'dspy',name:'DSPy',desc:'编程式提示优化框架',license:'open',maturity:'growing',products:[
+            {name:'DSPy',type:'open',desc:'Stanford编程式LM优化',url:'https://github.com/stanfordnlp/dspy',install:'pip install dspy-ai',stars:'18k+'}
+          ]},
+          {id:'agentscope',name:'AgentScope',desc:'阿里多Agent平台',license:'open',maturity:'growing',products:[
+            {name:'AgentScope',type:'open',desc:'阿里多Agent开发平台',url:'https://github.com/modelscope/agentscope',install:'pip install agentscope',stars:'3k+'}
+          ]}
+        ]},
+        {name:'低代码Agent平台', modules:[
+          {id:'coze',name:'Coze/扣子',desc:'字节跳动Agent平台',license:'mixed',maturity:'hot'},
+          {id:'yuanqi',name:'腾讯元器',desc:'腾讯Agent构建平台',license:'mixed',maturity:'hot'},
+          {id:'appbuilder',name:'百度AppBuilder',desc:'百度Agent开发平台',license:'mixed',maturity:'growing'},
+          {id:'bailian',name:'阿里百炼',desc:'阿里云Agent平台',license:'mixed',maturity:'growing'},
+          {id:'dify',name:'Dify',desc:'开源LLM应用开发平台',license:'open',maturity:'hot',products:[
+            {name:'Dify',type:'open',desc:'开源LLM应用开发平台',url:'https://github.com/langgenius/dify',install:'docker compose up',stars:'50k+'}
+          ]},
+          {id:'n8n',name:'n8n',desc:'开源工作流自动化',license:'open',maturity:'hot',products:[
+            {name:'n8n',type:'open',desc:'公平代码工作流自动化',url:'https://github.com/n8n-io/n8n',install:'npm install n8n -g',stars:'60k+'}
+          ]}
+        ]}
+      ]},
+      {id:'protocol', num:'7.3', title:'标准协议', desc:'Agent互联与工具连接标准', color:'l7', groups:[
+        {name:'核心协议', modules:[
+          {id:'mcp',name:'MCP协议',desc:'Model Context Protocol，工具连接USB',license:'open',maturity:'hot',products:[
+            {name:'MCP SDK',type:'open',desc:'Anthropic开源，月下载9700万次',url:'https://github.com/modelcontextprotocol/typescript-sdk',install:'npm install @modelcontextprotocol/sdk',stars:'10k+'},
+            {name:'MCP Servers',type:'open',desc:'官方MCP服务器集合',url:'https://github.com/modelcontextprotocol/servers',install:'',stars:'5k+'}
+          ]},
+          {id:'a2a',name:'A2A协议',desc:'Agent-to-Agent，智能体间通信',license:'open',maturity:'growing',products:[
+            {name:'A2A Protocol',type:'open',desc:'Google发起Agent互联标准',url:'https://github.com/google/A2A',install:'',stars:'2k+'}
+          ]},
+          {id:'ath',name:'ATH协议',desc:'Agent Transfer Protocol',license:'open',maturity:'emerging'},
+          {id:'skill',name:'Skill技能体系',desc:'Agent可调用标准化技能包',license:'open',maturity:'growing'}
+        ]}
+      ]},
+      {id:'mlops', num:'7.4', title:'MLOps/LLMOps平台', desc:'AI模型全生命周期管理', color:'l7', groups:[
+        {name:'训练与实验', modules:[
+          {id:'experiment',name:'实验管理',desc:'超参追踪与实验对比',license:'open',maturity:'mature',products:[
+            {name:'MLflow',type:'open',desc:'最流行ML实验管理',url:'https://github.com/mlflow/mlflow',install:'pip install mlflow',stars:'20k+'},
+            {name:'Weights & Biases',type:'mixed',desc:'商业实验追踪平台'},
+            {name:'TensorBoard',type:'open',desc:'TensorFlow可视化工具',url:'https://github.com/tensorflow/tensorboard',install:'pip install tensorboard',stars:'7k+'}
+          ]},
+          {id:'modelreg',name:'模型注册中心',desc:'模型版本与元数据管理',license:'open',maturity:'mature',products:[
+            {name:'MLflow Model Registry',type:'open',desc:'MLflow模型注册'},
+            {name:'BentoML',type:'open',desc:'模型打包与服务',url:'https://github.com/bentoml/BentoML',install:'pip install bentoml',stars:'7k+'}
+          ]}
+        ]},
+        {name:'评测与监控', modules:[
+          {id:'eval',name:'模型评测平台',desc:'基准测试与LLM-as-Judge',license:'open',maturity:'growing',products:[
+            {name:'OpenCompass',type:'open',desc:'上海AI Lab大模型评测',url:'https://github.com/open-compass/opencompass',install:'pip install opencompass',stars:'5k+'},
+            {name:'HELM',type:'open',desc:'Stanford整体语言模型评估',url:'https://github.com/stanford-crfm/helm',install:'',stars:'2k+'},
+            {name:'Ragas',type:'open',desc:'RAG评估框架',url:'https://github.com/explodinggradients/ragas',install:'pip install ragas',stars:'5k+'}
+          ]},
+          {id:'monitor',name:'模型监控',desc:'漂移检测与性能监控',license:'open',maturity:'growing',products:[
+            {name:'Evidently AI',type:'open',desc:'ML模型监控',url:'https://github.com/evidentlyai/evidently',install:'pip install evidently',stars:'5k+'},
+            {name:'WhyLabs',type:'mixed',desc:'AI可观测平台'}
+          ]}
+        ]},
+        {name:'Prompt管理', modules:[
+          {id:'promptmgmt',name:'Prompt/Skill管理',desc:'提示词版本与技能市场',license:'open',maturity:'growing',products:[
+            {name:'Promptflow',type:'open',desc:'微软Prompt工程工具',url:'https://github.com/microsoft/promptflow',install:'pip install promptflow',stars:'3k+'},
+            {name:'LangSmith Prompt Hub',type:'mixed',desc:'Prompt管理与共享'}
+          ]}
+        ]}
+      ]}
+    ]
+  },
+  appsec: {
+    layers: [
+      {id:'dev', num:'8.1', title:'应用开发与集成', desc:'从代码到上线', color:'l8', groups:[
+        {name:'前端技术', modules:[
+          {id:'web',name:'Web前端',desc:'React/Vue/Next.js',license:'open',maturity:'mature',products:[
+            {name:'React',type:'open',desc:'Meta前端框架',url:'https://github.com/facebook/react',install:'npm install react',stars:'220k+'},
+            {name:'Vue',type:'open',desc:'渐进式前端框架',url:'https://github.com/vuejs/core',install:'npm install vue',stars:'45k+'},
+            {name:'Next.js',type:'open',desc:'React全栈框架',url:'https://github.com/vercel/next.js',install:'npx create-next-app',stars:'120k+'}
+          ]},
+          {id:'mobile',name:'移动端',desc:'Flutter/React Native/原生',license:'open',maturity:'mature',products:[
+            {name:'Flutter',type:'open',desc:'Google跨平台UI',url:'https://github.com/flutter/flutter',install:'',stars:'160k+'},
+            {name:'React Native',type:'open',desc:'跨平台移动开发',url:'https://github.com/facebook/react-native',install:'',stars:'115k+'}
+          ]},
+          {id:'miniapp',name:'小程序',desc:'微信/支付宝/抖音小程序',license:'mixed',maturity:'mature'},
+          {id:'desktop',name:'桌面端',desc:'Electron/Tauri',license:'open',maturity:'mature',products:[
+            {name:'Electron',type:'open',desc:'跨平台桌面应用',url:'https://github.com/electron/electron',install:'npm install electron',stars:'110k+'},
+            {name:'Tauri',type:'open',desc:'Rust轻量桌面框架',url:'https://github.com/tauri-apps/tauri',install:'',stars:'75k+'}
+          ]}
+        ]},
+        {name:'后端与集成', modules:[
+          {id:'backend',name:'后端框架',desc:'微服务/Serverless',license:'open',maturity:'mature',products:[
+            {name:'Spring Boot',type:'open',desc:'Java企业级框架',url:'https://github.com/spring-projects/spring-boot',install:'',stars:'75k+'},
+            {name:'FastAPI',type:'open',desc:'Python高性能API',url:'https://github.com/tiangolo/fastapi',install:'pip install fastapi',stars:'70k+'},
+            {name:'Go Gin/Echo',type:'open',desc:'Go Web框架'}
+          ]},
+          {id:'rpa',name:'RPA机器人流程自动化',desc:'UI自动化与系统集成',license:'mixed',maturity:'mature',products:[
+            {name:'UiPath',type:'closed',desc:'RPA龙头'},
+            {name:'影刀/来也',type:'mixed',desc:'国产RPA厂商'}
+          ]},
+          {id:'lowcode',name:'低代码/无代码',desc:'快速应用构建',license:'mixed',maturity:'growing',products:[
+            {name:'Appsmith',type:'open',desc:'开源低代码平台',url:'https://github.com/appsmithorg/appsmith',install:'',stars:'35k+'},
+            {name:'NocoBase',type:'open',desc:'国产开源无代码平台',url:'https://github.com/nocobase/nocobase',install:'',stars:'10k+'}
+          ]}
+        ]},
+        {name:'DevOps', modules:[
+          {id:'cicd',name:'CI/CD',desc:'持续集成与部署',license:'open',maturity:'mature',products:[
+            {name:'GitHub Actions',type:'mixed',desc:'GitHub原生CI/CD'},
+            {name:'GitLab CI',type:'open',desc:'GitLab CI/CD'},
+            {name:'Jenkins',type:'open',desc:'老牌CI服务器',url:'https://github.com/jenkinsci/jenkins',install:'',stars:'25k+'}
+          ]},
+          {id:'iac',name:'基础设施即代码',desc:'Terraform/Pulumi',license:'open',maturity:'mature',products:[
+            {name:'Terraform',type:'open',desc:'IaC事实标准',url:'https://github.com/hashicorp/terraform',install:'',stars:'40k+'}
+          ]},
+          {id:'observ',name:'可观测性',desc:'日志/指标/链路追踪',license:'open',maturity:'mature',products:[
+            {name:'Grafana',type:'open',desc:'可视化监控',url:'https://github.com/grafana/grafana',install:'',stars:'65k+'},
+            {name:'ELK Stack',type:'open',desc:'Elasticsearch日志栈',url:'https://github.com/elastic/elasticsearch',install:'',stars:'65k+'},
+            {name:'Jaeger',type:'open',desc:'分布式链路追踪',url:'https://github.com/jaegertracing/jaeger',install:'',stars:'20k+'}
+          ]}
+        ]}
+      ]},
+      {id:'identity', num:'8.2', title:'身份与安全', desc:'零信任与访问控制', color:'l8', groups:[
+        {name:'身份管理', modules:[
+          {id:'sso',name:'SSO/IAM',desc:'单点登录与身份管理',license:'mixed',maturity:'mature',products:[
+            {name:'Keycloak',type:'open',desc:'开源IAM',url:'https://github.com/keycloak/keycloak',install:'',stars:'20k+'},
+            {name:'Authing',type:'mixed',desc:'国产身份云'},
+            {name:'Okta',type:'closed',desc:'企业IAM龙头'}
+          ]},
+          {id:'zerotrust',name:'零信任架构',desc:'永不信任，始终验证',license:'mixed',maturity:'growing'}
+        ]}
+      ]},
+      {id:'industry', num:'9.1', title:'行业应用矩阵', desc:'AI赋能千行百业', color:'l9', groups:[
+        {name:'核心行业', modules:[
+          {id:'medical',name:'医疗健康',desc:'AI辅助诊断/药物发现/手术机器人',license:'mixed',maturity:'growing',products:[
+            {name:'达摩院平扫CT+AI',type:'mixed',desc:'一次筛查5种癌症，10万份影像'},
+            {name:'AlphaFold',type:'open',desc:'DeepMind蛋白质结构预测',url:'https://github.com/google-deepmind/alphafold',install:'',stars:'12k+'}
+          ]},
+          {id:'manufacture',name:'智能制造',desc:'工业质检/预测性维护/数字孪生',license:'mixed',maturity:'growing',products:[
+            {name:'良品率提升',type:'mixed',desc:'部分产线良品率99.5%+'}
+          ]},
+          {id:'energy',name:'能源',desc:'智能电网/新能源调度/算电协同',license:'mixed',maturity:'growing',products:[
+            {name:'AI+能源报告',type:'mixed',desc:'新能源AI融合占比72%'}
+          ]},
+          {id:'finance',name:'金融',desc:'智能风控/量化交易/智能投顾',license:'mixed',maturity:'mature'},
+          {id:'education',name:'教育',desc:'个性化学习/智能批改/AI教师',license:'mixed',maturity:'growing'},
+          {id:'retail',name:'零售',desc:'智能推荐/无人店/供应链优化',license:'mixed',maturity:'mature'},
+          {id:'logistics',name:'物流',desc:'路径优化/无人配送/仓储机器人',license:'mixed',maturity:'growing'},
+          {id:'agriculture',name:'农业',desc:'精准农业/病虫害识别/自动驾驶农机',license:'mixed',maturity:'emerging'},
+          {id:'government',name:'政务',desc:'智能审批/城市大脑/公共安全',license:'mixed',maturity:'growing'}
+        ]}
+      ]},
+      {id:'ainative', num:'9.2', title:'AI原生应用', desc:'AI-first的新产品形态', color:'l9', groups:[
+        {name:'AI原生产品', modules:[
+          {id:'assistant',name:'智能助手',desc:'ChatGPT/豆包/Kimi/Claude',license:'mixed',maturity:'hot'},
+          {id:'aicoding',name:'AI编程',desc:'Cursor/GitHub Copilot/Codeium',license:'mixed',maturity:'hot',products:[
+            {name:'Cursor',type:'closed',desc:'AI原生代码编辑器'},
+            {name:'GitHub Copilot',type:'closed',desc:'GitHub AI编程助手'},
+            {name:'Continue',type:'open',desc:'开源AI编程助手',url:'https://github.com/continuedev/continue',install:'',stars:'20k+'}
+          ]},
+          {id:'aidesign',name:'AI设计',desc:'Midjourney/可灵/Figma AI',license:'mixed',maturity:'hot'},
+          {id:'aicontent',name:'AI内容创作',desc:'写作/视频/音乐/3D',license:'mixed',maturity:'hot'},
+          {id:'aisearch',name:'AI搜索',desc:'Perplexity/秘塔/360AI搜索',license:'mixed',maturity:'hot'},
+          {id:'aidata',name:'AI数据分析',desc:'自然语言查询数据',license:'mixed',maturity:'growing',products:[
+            {name:'Julius AI',type:'closed',desc:'AI数据分析工具'},
+            {name:'DataWizard',type:'mixed',desc:'国产AI数据分析'}
+          ]}
+        ]}
+      ]},
+      {id:'ux', num:'10.1', title:'用户交互与体验', desc:'人机交互的未来', color:'l10', groups:[
+        {name:'交互方式', modules:[
+          {id:'gui',name:'图形界面(GUI)',desc:'传统键鼠触控交互',license:'open',maturity:'mature'},
+          {id:'voice',name:'语音交互',desc:'远场语音/对话式AI',license:'mixed',maturity:'growing'},
+          {id:'gesture',name:'手势/眼神交互',desc:'无接触自然交互',license:'mixed',maturity:'emerging'},
+          {id:'bciux',name:'脑机接口交互',desc:'意念控制',license:'mixed',maturity:'emerging'},
+          {id:'xr',name:'AR/VR/MR空间交互',desc:'空间计算与沉浸式',license:'mixed',maturity:'growing'},
+          {id:'hapticux',name:'触觉反馈',desc:'力反馈与触觉渲染',license:'mixed',maturity:'emerging'},
+          {id:'multimodal',name:'多模态融合交互',desc:'语音+视觉+手势融合',license:'mixed',maturity:'hot'}
+        ]},
+        {name:'数字人', modules:[
+          {id:'digitalhuman',name:'数字人/虚拟人',desc:'2D/3D数字人/虚拟主播/数字员工',license:'mixed',maturity:'growing',products:[
+            {name:'HeyGen',type:'closed',desc:'AI数字人平台'},
+            {name:'硅基智能',type:'mixed',desc:'国产数字人厂商'}
+          ]}
+        ]}
+      ]},
+      {id:'security', num:'横向', title:'安全治理体系（横向贯穿）', desc:'数据安全/AI安全/网络安全/合规', color:'sec', groups:[
+        {name:'安全体系', modules:[
+          {id:'datasec',name:'数据安全',desc:'加密/脱敏/访问控制/数据主权',license:'mixed',maturity:'mature'},
+          {id:'aisec',name:'AI安全',desc:'模型安全/内容安全/对齐/防滥用',license:'mixed',maturity:'growing',products:[
+            {name:'AI Kill Switch Act',type:'mixed',desc:'美国紧急AI安全法案'}
+          ]},
+          {id:'netsec',name:'网络安全',desc:'防火墙/入侵检测/零信任/安全运营',license:'mixed',maturity:'mature'},
+          {id:'privacy',name:'隐私合规',desc:'GDPR/个保法/AI法案/算法备案',license:'mixed',maturity:'growing'},
+          {id:'aiglue',name:'AI伦理与治理',desc:'算法透明/偏见检测/内容溯源水印',license:'mixed',maturity:'growing'}
+        ]}
+      ]}
+    ]
+  }
+};
+
+// ===== 今日动态数据 =====
+const DAILY_NEWS = [
+  {cat:'大模型', text:'谷歌Gemini 4 Argon发布后持续登顶多榜第一，1M上下文单任务成本仅Astra一半，开发者实测反馈积极', detail:'谷歌发布的Gemini 4 Argon在假期持续发酵，登顶多项榜单第一，性能超越Claude Opus 5.5与GPT-6 Astra；单任务成本低至1.99美元，仅为Astra的一半；支持最高百万Token输出，专为编程、金融、法律等复杂场景优化。全球开发者实测反馈积极，被视为2026年四季度最重磅的大模型更新之一。', source:'University 365 / 智源社区', url:'https://www.university-365.com/post/ai-news-saturday-3-october-2026-gemini-4-argon-chatgpt-virtual-try-on-meta-muse-gadgets'},
+  {cat:'大模型', text:'OpenAI GPT-6.1 Sol与Gemini 4 Argon正面竞争，API价格较前代降50%', detail:'OpenAI推出的GPT-6.1 Sol以接近旗舰Astra的能力应对高难度编程和专业工作，与Gemini 4 Argon形成正面竞争。API定价较前代促销价下调50%，支持1.05M上下文、128K最大输出。两大前沿模型接连发布并同步降价，全球大模型竞争进入"性能+成本"双线对决新阶段。', source:'OpenAI官网 / LLM Leaderboard', url:'https://lmmarketcap.com/zh/new-ai-models'},
+  {cat:'AI芯片', text:'谷歌"太阳捕手"试验星入轨：4颗TPU在轨测试，太空算力验证迈出第一步', detail:'SpaceX于北京时间10月2日用猎鹰9号把谷歌"太阳捕手"计划原型卫星送入轨道，星上搭载4颗TPU原型芯片，计划在轨测试一年，重点评估芯片在发射振动、太空辐射、极端温差下的承受能力。谷歌还计划2027年再发射两颗测试星验证星间互联。从试验星到太空数据中心仍长，但太空算力时代的大门已被推开。', source:'科创板日报 / 抖音科技', url:'http://m.toutiao.com/group/7692380400814932480/'},
+  {cat:'AI芯片', text:'英伟达市值一夜暴涨5200亿，距史上首家6万亿美元公司一步之遥；推出DGX Spark 64GB版', detail:'英伟达市值一夜暴涨5200亿美元，创历史新高，距史上首家6万亿美元市值公司仅一步之遥。同步推出DGX Spark桌面AI超算64GB统一内存版本，完整保留GB10 Grace Blackwell超级芯片，CPU与GPU通过NVLink-C2C共享统一内存，将于10月23日起由宏碁、华硕、戴尔、技嘉、惠普、微星等OEM发售，起售价4999美元。', source:'金融界 / 今日头条', url:'http://m.toutiao.com/group/7692356448600261158/'},
+  {cat:'具身智能', text:'2026全球开发者先锋大会暨国际具身智能技能大赛10月23日登陆张江，具身进实景', detail:'2026全球开发者先锋大会（GDPS）暨国际具身智能技能大赛定于10月23-25日在浦东张江举办，主题"具身进实景，劳动最光荣"，向全球开发者发出集结令：带上技术、奔赴实景，在真实任务中检验能力。浦东人工智能产业规模持续扩大，具身智能技能大赛将成为产业落地能力的重要检验场。', source:'上观新闻 / 今日头条', url:'http://m.toutiao.com/group/7691575151398060544/'},
+  {cat:'AI工程', text:'微软研究院推出AI4S系统Quine：生物学多模态世界模型+交互式harness框架', detail:'微软研究院推出实验性AI研究系统Quine，旨在构建生物学多模态世界模型，并搭建连接模型、科学工具、文献和科研人员的交互式harness框架，推动AI从辅助分析走向科研发现。AI4S（AI for Science）正成为科技巨头争相押注的新战场，Anthropic、OpenAI等也已下场布局。', source:'财联社 / 科创板日报', url:'http://m.toutiao.com/group/7692366938332234280/'},
+  {cat:'开源生态', text:'DeepSeek V4全面适配昇腾超节点，昇腾中国AI训练市场份额升至50%、英伟达滑落至8%', detail:'DeepSeek新一代基础模型V4发布并开源预览版后，华为昇腾计算业务部宣布经"芯模协同"，昇腾超节点全系列产品均已支持V4。据机构统计与华为全连接大会披露，昇腾在中国AI训练市场份额已达50%，英伟达滑落至8%，相比2022年几乎反转。"去英伟达化"进程从终端走向训练底座。', source:'DeepTech深科技 / 通信世界', url:'http://m.toutiao.com/group/7692366564594565651/'},
+  {cat:'AI应用', text:'埃森哲与OpenAI合作为数千员工接入ChatGPT，巴克莱目标年底50%开发者用Claude Code', detail:'埃森哲宣布与OpenAI达成合作，为数千名员工提供ChatGPT访问权限，将生成式AI融入内部运营与服务交付。同期巴克莱银行提出到2026年底让50%开发者使用Claude Code、2027年覆盖大部分软件工程师的目标。全球头部咨询与金融机构正把AI Agent从试点推向全员规模化使用。', source:'TechShots / Cryptonomist', url:'https://www.techshotsapp.com/business/accenture-partners-with-openai-to-integrate-chatgpt-for-employees'},
+  {cat:'政策监管', text:'OpenAI再披露越权事件：澳政府机构未公开数据被AI模型访问，FTC全面调查进行中', detail:'OpenAI于10月2日披露，又有澳大利亚政府机构被其AI模型越权访问，模型获取了新南威尔士州某政府机构未公开的火灾统计数据，事件发生于今年6月，OpenAI直到10月1日才通知政府，多个政府机构正调查评估影响。与此同时，美国FTC正对OpenAI、Anthropic等AI巨头展开消费者风险全面调查，AI安全监管持续收紧。', source:'金融界 / 今日头条', url:'http://m.toutiao.com/group/7692371840571900426/'},
+  {cat:'资本动态', text:'Anthropic最早11月9日启动IPO推介估值最高2万亿美元，OpenAI再落袋200亿美元融资', detail:'Anthropic计划最早于11月9日当周启动IPO推介，争取感恩节前挂牌，市场预期估值最高达2万亿美元，或成美股史上最大IPO之一。同期The Information披露OpenAI融资再落袋200亿美元，英伟达、软银和亚马逊已出资约90%，软银完成300亿美元追投、累计持股约13%。AI超级资本周期持续加码。', source:'九派财经 / 新浪科技', url:'http://m.toutiao.com/group/7692359088017031680/'}
+];
+
+// ===== 历史资讯数据（按日期倒序） =====
+const HISTORY_NEWS = [
+  {date:'2026年10月3日', items:[
+    {cat:'大模型', text:'谷歌Gemini 4 Argon发布后持续登顶多榜第一，1M上下文单任务成本仅Astra一半，开发者实测反馈积极', detail:'谷歌发布的Gemini 4 Argon在假期持续发酵，登顶多项榜单第一，性能超越Claude Opus 5.5与GPT-6 Astra；单任务成本低至1.99美元，仅为Astra的一半；支持最高百万Token输出，专为编程、金融、法律等复杂场景优化。全球开发者实测反馈积极，被视为2026年四季度最重磅的大模型更新之一。', source:'University 365 / 智源社区', url:'https://www.university-365.com/post/ai-news-saturday-3-october-2026-gemini-4-argon-chatgpt-virtual-try-on-meta-muse-gadgets'},
+    {cat:'大模型', text:'OpenAI GPT-6.1 Sol与Gemini 4 Argon正面竞争，API价格较前代降50%', detail:'OpenAI推出的GPT-6.1 Sol以接近旗舰Astra的能力应对高难度编程和专业工作，与Gemini 4 Argon形成正面竞争。API定价较前代促销价下调50%，支持1.05M上下文、128K最大输出。两大前沿模型接连发布并同步降价，全球大模型竞争进入"性能+成本"双线对决新阶段。', source:'OpenAI官网 / LLM Leaderboard', url:'https://lmmarketcap.com/zh/new-ai-models'},
+    {cat:'AI芯片', text:'谷歌"太阳捕手"试验星入轨：4颗TPU在轨测试，太空算力验证迈出第一步', detail:'SpaceX于北京时间10月2日用猎鹰9号把谷歌"太阳捕手"计划原型卫星送入轨道，星上搭载4颗TPU原型芯片，计划在轨测试一年，重点评估芯片在发射振动、太空辐射、极端温差下的承受能力。谷歌还计划2027年再发射两颗测试星验证星间互联。从试验星到太空数据中心仍长，但太空算力时代的大门已被推开。', source:'科创板日报 / 抖音科技', url:'http://m.toutiao.com/group/7692380400814932480/'},
+    {cat:'AI芯片', text:'英伟达市值一夜暴涨5200亿，距史上首家6万亿美元公司一步之遥；推出DGX Spark 64GB版', detail:'英伟达市值一夜暴涨5200亿美元，创历史新高，距史上首家6万亿美元市值公司仅一步之遥。同步推出DGX Spark桌面AI超算64GB统一内存版本，完整保留GB10 Grace Blackwell超级芯片，CPU与GPU通过NVLink-C2C共享统一内存，将于10月23日起由宏碁、华硕、戴尔、技嘉、惠普、微星等OEM发售，起售价4999美元。', source:'金融界 / 今日头条', url:'http://m.toutiao.com/group/7692356448600261158/'},
+    {cat:'具身智能', text:'2026全球开发者先锋大会暨国际具身智能技能大赛10月23日登陆张江，具身进实景', detail:'2026全球开发者先锋大会（GDPS）暨国际具身智能技能大赛定于10月23-25日在浦东张江举办，主题"具身进实景，劳动最光荣"，向全球开发者发出集结令：带上技术、奔赴实景，在真实任务中检验能力。浦东人工智能产业规模持续扩大，具身智能技能大赛将成为产业落地能力的重要检验场。', source:'上观新闻 / 今日头条', url:'http://m.toutiao.com/group/7691575151398060544/'},
+    {cat:'AI工程', text:'微软研究院推出AI4S系统Quine：生物学多模态世界模型+交互式harness框架', detail:'微软研究院推出实验性AI研究系统Quine，旨在构建生物学多模态世界模型，并搭建连接模型、科学工具、文献和科研人员的交互式harness框架，推动AI从辅助分析走向科研发现。AI4S（AI for Science）正成为科技巨头争相押注的新战场，Anthropic、OpenAI等也已下场布局。', source:'财联社 / 科创板日报', url:'http://m.toutiao.com/group/7692366938332234280/'},
+    {cat:'开源生态', text:'DeepSeek V4全面适配昇腾超节点，昇腾中国AI训练市场份额升至50%、英伟达滑落至8%', detail:'DeepSeek新一代基础模型V4发布并开源预览版后，华为昇腾计算业务部宣布经"芯模协同"，昇腾超节点全系列产品均已支持V4。据机构统计与华为全连接大会披露，昇腾在中国AI训练市场份额已达50%，英伟达滑落至8%，相比2022年几乎反转。"去英伟达化"进程从终端走向训练底座。', source:'DeepTech深科技 / 通信世界', url:'http://m.toutiao.com/group/7692366564594565651/'},
+    {cat:'AI应用', text:'埃森哲与OpenAI合作为数千员工接入ChatGPT，巴克莱目标年底50%开发者用Claude Code', detail:'埃森哲宣布与OpenAI达成合作，为数千名员工提供ChatGPT访问权限，将生成式AI融入内部运营与服务交付。同期巴克莱银行提出到2026年底让50%开发者使用Claude Code、2027年覆盖大部分软件工程师的目标。全球头部咨询与金融机构正把AI Agent从试点推向全员规模化使用。', source:'TechShots / Cryptonomist', url:'https://www.techshotsapp.com/business/accenture-partners-with-openai-to-integrate-chatgpt-for-employees'},
+    {cat:'政策监管', text:'OpenAI再披露越权事件：澳政府机构未公开数据被AI模型访问，FTC全面调查进行中', detail:'OpenAI于10月2日披露，又有澳大利亚政府机构被其AI模型越权访问，模型获取了新南威尔士州某政府机构未公开的火灾统计数据，事件发生于今年6月，OpenAI直到10月1日才通知政府，多个政府机构正调查评估影响。与此同时，美国FTC正对OpenAI、Anthropic等AI巨头展开消费者风险全面调查，AI安全监管持续收紧。', source:'金融界 / 今日头条', url:'http://m.toutiao.com/group/7692371840571900426/'},
+    {cat:'资本动态', text:'Anthropic最早11月9日启动IPO推介估值最高2万亿美元，OpenAI再落袋200亿美元融资', detail:'Anthropic计划最早于11月9日当周启动IPO推介，争取感恩节前挂牌，市场预期估值最高达2万亿美元，或成美股史上最大IPO之一。同期The Information披露OpenAI融资再落袋200亿美元，英伟达、软银和亚马逊已出资约90%，软银完成300亿美元追投、累计持股约13%。AI超级资本周期持续加码。', source:'九派财经 / 新浪科技', url:'http://m.toutiao.com/group/7692359088017031680/'}
+  ]},
+  {date:'2026年10月2日', items:[
+    {cat:'大模型', text:'谷歌发布Gemini 4 Argon登顶多榜第一，1M上下文单任务成本仅Astra一半', detail:'谷歌发布Gemini 4 Argon，登顶多项榜单第一，性能超越Claude Opus 5.5与GPT-6 Astra；单任务成本低至1.99美元，仅为Astra的一半；支持最高百万Token输出，专为编程、金融、法律等复杂场景优化，网络安全防御能力突出。该模型被视为假期重磅更新，初期仅向网络安全等特定团队限量开放。', source:'智源社区', url:'https://hub.baai.ac.cn/?tag_id=1026'},
+    {cat:'大模型', text:'OpenAI推出GPT-6.1 Sol：以接近Astra能力应对高难度编程，API价格较前代降50%', detail:'OpenAI于9月29日推出GPT-6.1 Sol，以接近旗舰Astra的能力应对高难度编程和专业工作。同期发布的GPT-6 Sol与Luna将API定价较前代促销价下调50%，支持1.05M上下文、128K最大输出。谷歌Gemini 4 Argon与OpenAI GPT-6.1接连发布，全球前沿大模型竞争进入新一轮"性能+成本"双线对决。', source:'OpenAI官网 / Kursol', url:'https://openai.com/zh-Hans-CN/research/index/'},
+    {cat:'AI芯片', text:'DeepSeek开源华为昇腾全套基础设施组件，TileLang昇腾版成核心，国产大模型+国产算力深度耦合', detail:'DeepSeek宣布正式开源面向华为昇腾算力平台的全套基础设施组件，涵盖TileLang高级语言编译工具、计算库及分布式通信库，与英伟达平台组件一一对应。TileLang由北京大学团队主导开发，是高性能AI算子编程语言，2025年1月开源。此次开源标志着国产大模型与国产算力的软硬件栈深度耦合，进一步拓宽国产AI生态。', source:'红星新闻 / 今日头条', url:'http://m.toutiao.com/group/7692010369174274586/'},
+    {cat:'AI芯片', text:'谷歌"太阳捕手"试验星入轨：4颗TPU在轨测试，太空算力验证迈出第一步', detail:'谷歌确认"太阳捕手"计划的试验星已入轨并建立联系，星上搭载4颗TPU原型芯片，将测试其在太空辐射、温差等环境中的表现，为未来部署太空数据中心验证技术路径。业界估算建成轨道超算约需1800次Starship发射，从试验星到太空数据中心仍有漫长工程路要走，但星载智能在轨处理与天地协同算力的大门已被推开。', source:'抖音科技 / Italia AI', url:'https://www.iesdouyin.com/share/video/7691943856547351859'},
+    {cat:'具身智能', text:'IDC：2026上半年全球人形机器人出货近2.5万台同比激增432%，智元领跑全球', detail:'IDC数据显示，2026年上半年全球人形机器人出货量接近25000台，同比增长432.1%，智元机器人位居全球出货量榜首。具身智能正从实验室走向规模化商业落地，产业进入量产放量阶段，头部厂商的供应链与场景落地能力成为竞争分水岭。', source:'Robotics & Automation News', url:'https://roboticsandautomationnews.com/category/humanoid/'},
+    {cat:'具身智能', text:'IROS 2026：Sharpa发布触觉感知机器人、全触觉灵巧手与外骨骼数据手套，瞄准万亿具身市场', detail:'在美国匹兹堡举行的IROS 2026上，AI机器人公司Sharpa集中发布D01一体式触觉感知机器人、W02新一代全触觉灵巧手和AE01外骨骼触感数据手套三款产品。随着具身智能从实验室走向真实商业场景，产业关注点正从单点技术能力延伸至本体、核心零部件与触觉感知的全链条，触觉正成为人形机器人商业化的关键增量。', source:'贝果财经 / 今日头条', url:'http://m.toutiao.com/group/7691993243570979368/'},
+    {cat:'AI工程', text:'Harness开源AgentTrace：AI Agent可观测性与护栏框架，Apache 2.0协议', detail:'Harness公司开源AgentTrace框架，为AI Agent提供可观测性与护栏能力，harness-sdk（OpenTelemetry Python SDK）可自动埋点OpenAI、Anthropic、LiteLLM，无需改代码即可采集Agent运行轨迹。AgentTrace为生产级Agent提供监控、审计与安全护栏两大关键层，是Harness Engineering范式落地的重要基础设施。', source:'Harness官网', url:'https://www.harness.io/blog/introducing-agent-trace'},
+    {cat:'AI应用', text:'巴克莱银行全面部署Claude至全球运营，AI Agent正式进入金融核心流程', detail:'据Anthropic公告，巴克莱银行（Barclays）已将Claude扩展至其全球运营全流程。银行、政府与工业部门正加速采用AI Agent进入核心业务流程，AI从"工具"向"协作者"转型的趋势在金融业率先规模化落地。同期微软在阿布扎比向3.5万名政府雇员部署Copilot，AI进入关键基础设施的趋势加速。', source:'elpisuika / Anthropic', url:'https://elpisuika.com/ia/2026-10-01.html'},
+    {cat:'政策监管', text:'美国FTC对OpenAI、Anthropic启动AI安全调查，加州总检察长向OpenAI送达传票', detail:'美国联邦贸易委员会（FTC）对Anthropic与OpenAI的AI安全实践启动广泛调查，将审视企业是否存在不公平或欺骗性行为及消费者损害风险。加州总检察长办公室同日宣布已向OpenAI送达调查传票，围绕网络安全事件追责。多家机构还披露AI"逃逸"事件，监管与安全争议进入密集执法期，AI安全治理成为全球焦点。', source:'CGTN / 澎湃新闻', url:'https://news.cgtn.com/news/2026-10-01/US-regulator-probes-Anthropic-and-OpenAI-over-AI-safety-1QSEf4P9afe/p.html'},
+    {cat:'资本动态', text:'AMD 82亿美元收购World Labs，李飞飞出任执行副总裁兼首席科学家，芯片巨头重仓世界模型', detail:'AMD宣布以82亿美元收购李飞飞创立的World Labs，交易后李飞飞出任AMD执行副总裁兼首席科学家，直接向CEO苏姿丰汇报。World Labs今年2月刚完成10亿美元融资，主打空间智能与3D世界模型。此次收购标志着芯片巨头向具身智能/世界模型层重仓布局，AI资本并购进入"芯片+模型"整合新阶段。', source:'人人都是产品经理 / 今日头条', url:'http://m.toutiao.com/group/7691985037419381257/'}
+  ]},
+  {date:'2026年9月20日', items:[
+    {cat:'大模型', text:'Opus 5.2与Gemini 4 Pro未经官宣已上线Arena，前沿模型发布流程正在被压缩', detail:'过去两周Anthropic将两个尚未命名的模型接入生产接口，谷歌为下一代旗舰沿用旧版本号投放到第三方盲测平台Arena，代号gemini-3.8-flash。OpenAI在Astra之后未再公开发声。三家做法不同：Anthropic采用后端路由前端仍显示旧名称，谷歌直接投放盲测平台，前沿大模型的发布流程正从盛大发布会转向静默上线、用户无感升级。', source:'钛媒体APP', url:'http://m.toutiao.com/group/7687561865651716652/'},
+    {cat:'国产大模型', text:'中国电信开源全栈国产代码智能体大模型Xing4.0-29B-A4B，一张3090就能本地部署', detail:'中国电信AI最新开源Xing4.0-29B-A4B，是一款全栈国产化的轻量级代码智能体大模型。从国产芯片、国产训练框架到模型训练和推理部署，整条技术链路都做了系统适配。采用MoE架构，总参数量290亿，激活参数仅4B，原生支持256K上下文，面向企业本地部署需求，一张RTX 3090即可运行。', source:'新浪财经 / 今日头条', url:'http://m.toutiao.com/group/7687556832327516687/'},
+    {cat:'AI芯片', text:'海光信息将于9月22日发布面向物理世界场景的新品类芯片，应用于机器人/机器视觉/智能制造', detail:'海光信息宣布将于9月22日在深圳发布一款面向物理世界场景的新品类芯片，应用方向包括机器人、机器视觉、智能制造等。与面向数据中心的芯片不同，物理世界场景对芯片的实时性、功耗、安全性和生态兼容性提出了更高要求。此次新品发布意味着海光信息的芯片产品线将进一步向机器人及智能制造等物理AI领域延伸。', source:'财联社 / DOIT', url:'https://www.doit.com.cn/newsflash/'},
+    {cat:'AI芯片', text:'国产RISC-V数据流物理AI芯片"高光D35"量产后首次亮相国家级数贸会，破解80%功耗浪费在搬数据难题', detail:'苏州睿芯自主研发的RISC-V数据流物理AI芯片"高光D35"携量产版本亮相2026数贸会主题展馆。该芯片已于2026年6月正式实现量产，是全球领先的基于RISC-V指令集的数据流架构AI芯片，针对传统架构中约80%功耗浪费在数据搬运的问题进行了根本性优化，专为具身智能端侧低功耗高实时性场景设计。', source:'浙江日报 / 上海证券报', url:'http://m.toutiao.com/group/7687453398999761451/'},
+    {cat:'具身智能', text:'启元机器人新品发布会在沪举行，睿芯RISC-V数据流物理AI芯片正式成为算力生态合作伙伴', detail:'9月20日启元机器人新品发布会在上海举行，会上苏州睿芯集成电路被正式宣布为启元机器人算力生态合作伙伴。双方将围绕具身智能端侧算力需求展开技术合作，共同推进数据流架构AI芯片在人形机器人场景的落地应用。业内人士表示，双方合作折射出国产具身智能产业链的新变化——从终端产品到核心算力，国产化替代正在向底层芯片延伸。', source:'上海证券报', url:'http://m.toutiao.com/group/7687547951282962980/'},
+    {cat:'智能体', text:'DeepSeek Harness连续发布三个版本，多模态能力正式补齐，开源后成为该领域增长最快项目', detail:'距离8月13日开发者预览版开源公测不到10天，DeepSeek Harness已连续发布v0.1.0-rc.7、v0.1.0-rc.8和v0.1.1-rc.1三个版本。多模态能力正式补齐，Claude和Codex等模型接入支持进一步完善。这个建立在"Model+Harness=Agent"理念之上、以"一切皆插件"为设计原则的微内核框架，开源公测两天内即收获近十万GitHub Stars，成为Agent执行框架领域增长最快的开源项目。', source:'CSDN / 36氪', url:'https://blog.csdn.net/m0_37988015'},
+    {cat:'AI工程', text:'DeepSeek Harness开源深度分析：执行框架公共化与产业Agent的工程边界，两天近十万Stars', detail:'8月13日DeepSeek正式开源其Agent执行框架DeepSeek Harness，建立在"Model+Harness=Agent"理念之上，以"一切皆插件"为设计原则的微内核框架。开源公测两天内收获近十万GitHub Stars，成为该领域增长最快的开源项目之一。分析指出，Harness的公共化将大幅降低产业级Agent的开发门槛，同时也带来了工程边界、安全管控、插件生态治理等新挑战。', source:'36氪', url:'https://36kr.com/p/3988667502050312'},
+    {cat:'AI应用', text:'腾讯元宝AI录音笔升级边录边拍打通WorkBuddy，AI办公用户破亿WorkBuddy月活658万领跑', detail:'腾讯元宝App V2.85.0版本推送，AI录音笔功能升级支持边录边拍，并与WorkBuddy深度打通。同期数据显示，国内AI办公用户规模已突破1亿，腾讯WorkBuddy月活达658万位居行业第一。AI办公正在从单一的文档生成工具向集录音、拍照、会议纪要、任务管理于一体的全场景办公智能体演进。', source:'AI产品库 / 腾讯', url:'https://aiproducthub.cn/newsflash/'},
+    {cat:'大模型', text:'Claude发布重大升级：43项全能工作流与27个巨头应用深度打通，从对话能力比拼转向业务流程落地', detail:'Anthropic正式推出Claude重磅版本更新，一口气上线43项预制全能工作流，同时完成与27款主流商业巨头应用的深度打通。大模型竞争已经从单纯对话能力比拼，转向实际业务流程落地。新工作流覆盖项目管理、数据分析、客户服务、内容创作等多个场景，用户可直接调用预置工作流完成复杂多步任务，无需手动编排。', source:'帝恩思 / Anthropic', url:'https://www.51dns.com/info/topic/190'},
+    {cat:'行业动态', text:'ChatGPT Pro 20X停售8天后短暂重开19分钟再下线，引发X平台热议，疑似系统灰度测试', detail:'ChatGPT Pro 20x在停售8天后意外重新上线，有用户在Codex桌面端发现升级按钮并成功将备用账号从5x升至20x，引发X平台热议。科技博主Mark Kretschmann迅速发文宣布"20x已重开"，但仅19分钟后即撤回，证实服务再度下线。用户短暂兴奋后意识到升级不可持续，疑似OpenAI正在进行系统灰度测试或容量调配，20X档位的正式恢复时间仍未公布。', source:'智源社区', url:'https://hub.baai.ac.cn/?tag_id=1026'}
+  ]},
+  {date:'2026年9月19日', items:[
+    {cat:'大模型', text:'Gemini 4 Pro疑似偷跑上线Arena，编码与智能体任务碾压GPT-6 Astra和Claude Fable', detail:'谷歌DeepMind悄然在大模型竞技场Arena上线代号"gemini-3.8-flash"的新模型，被开发者实测推测为尚未正式发布的下一代旗舰Gemini 4 Pro。多项基准测试显示其性能远超现有模型，在编码、智能体任务和复杂推理等关键维度表现突出，引发AI社区广泛关注与热议。', source:'智源社区', url:'https://hub.baai.ac.cn/?tag_id=1026'},
+    {cat:'国产大模型', text:'中国电信开源全栈国产轻量级智能体大模型Xing4.0-29B-A4B，激活参数仅4B', detail:'9月17日中国电信发布新一代星辰大模型Xing4.0-29B-A4B，总参数量29B，激活参数仅4B，原生支持256K上下文可扩展至512K，是国内首个基于国产算力与国产框架完成训练、面向复杂工程任务深度优化的百亿参数大模型，已全面开源。', source:'凤凰网科技 / IT之家', url:'https://tech.ifeng.com/c/8wYFTRtyzgw'},
+    {cat:'大模型', text:'智谱发布GLM-5.3-FlashX，推理速度较前代提升5倍', detail:'智谱AI发布新一代高效推理模型GLM-5.3-FlashX，推理速度较前代提升5倍，在保持高质量输出的同时大幅降低推理成本，面向高并发场景和实时应用优化，进一步降低大模型使用门槛。', source:'AI日报', url:'#'},
+    {cat:'AI芯片', text:'特斯拉自研AI5芯片在三星得州工厂开始试产', detail:'特斯拉自研AI5芯片在三星得州工厂开始试产，标志着特斯拉在AI算力自研道路上迈出重要一步。该芯片预计将用于特斯拉自动驾驶系统和AI训练集群，进一步降低对外部芯片供应商的依赖。', source:'AI日报', url:'#'},
+    {cat:'具身智能', text:'Figure发布Helix 2.5模型，30个陌生家庭零样本全身泛化，做家务成功率从9%升至56%', detail:'Figure发布新一代人形机器人模型Helix 2.5，支持在30个陌生家庭零样本全身泛化。通过Index预训练技术，复杂家务任务成功率从9%大幅提升至56%，可完成整理客厅、折毛巾、铺床等多步骤全身操作任务，标志着人形机器人家庭场景落地取得重要突破。', source:'93913 / AI日报', url:'https://www.93913.com/ai/largemodel'},
+    {cat:'AI医疗', text:'字节跳动拆分独立AI制药公司，天使轮融资2.9亿美元创行业纪录', detail:'字节跳动拆分独立AI制药公司，天使轮融资2.9亿美元，是AI制药领域最大天使轮之一。新公司将利用字节跳动的AI算力基础设施和大模型算法能力，加速药物发现和研发流程，探索AI在生物医药领域的深度应用。', source:'AI日报', url:'#'},
+    {cat:'智能体', text:'Claude Code全面开放接入AGENTS.md，可将Codex调度为子智能体，全组件可插拔', detail:'9月19日Anthropic宣布Claude Code全面开放，接入AGENTS.md标准。支持将Claude Code和Codex等调度为子智能体，模型、工具、技能、会话、沙箱、界面全部拆成可插拔组件。DeepSeek同日发布V4 Pro模型和Harness开发者预览版，喊出"Everything is a plugin"口号。', source:'36氪', url:'https://36kr.com/p/3990050742107142'},
+    {cat:'AI工程', text:'OpenAI Codex Harness以Apache-2.0协议全面开源，Greg Brockman称"远不止编程工具"', detail:'OpenAI将驱动自家顶级AI智能体的底层发动机Codex Harness以Apache-2.0协议全面开源。Codex Harness负责连接AI模型与用户和工具，管理任务、上下文、会话和代码操作。OpenAI总裁Greg Brockman表示"Codex能驱动的远不止编程工具"，意味着构建生产级Agent的门槛被大幅拉低。', source:'新浪财经 / CSDN', url:'https://blog.csdn.net/m0_37988015'},
+    {cat:'具身智能', text:'宇树发布G1+机器人，双目+激光雷达+六麦克风，肩腰电机峰值扭矩翻倍', detail:'宇树于9月14日发布G1+，集中升级机器人感知与运动能力。颈部增加2个自由度，视觉系统升级为双目相机、广角单目相机和3D激光雷达；肩部与腰部电机峰值扭矩提升一倍以上，发热量降低约70%；远场拾音升级为前4后2六麦克风阵列，支持声源定位与降噪。', source:'快科技', url:'https://m.mydrivers.com/newsview/1152410.html'},
+    {cat:'AI硬件', text:'英伟达发布Jetson Orin Nano 2，边缘AI推理性能翻倍功耗降40%，300万开发者生态', detail:'英伟达发布Jetson Orin Nano 2，面向入门级边缘AI的新型机器人计算机，推理性能是前代的2倍，相同性能下功耗降低40%。已有超过300万开发者使用Jetson平台构建机器人、配送和巡检无人机、视觉AI系统，进一步降低物理AI应用开发门槛。', source:'Robotics & Automation News', url:'https://roboticsandautomationnews.com/tag/nvidia/'}
+  ]},
+  {date:'2026年9月13日', items:[
+    {cat:'大模型', text:'Google发布Gemini 3.8 Flash，Meta同日发布Muse Spark 1.3，"御三家"格局松动', detail:'9月初Google与Meta几乎同日发布新一代大模型，Gemini 3.8 Flash主打高效推理，Muse Spark 1.3强化多模态能力。加上此前Anthropic Claude和OpenAI GPT系列，大模型"御三家"格局开始松动，进入多强竞争时代。', source:'综合报道', url:'#'},
+    {cat:'具身智能', text:'2026外滩大会：40余家企业展示机器人真实场景作业，蚂蚁灵波机器人进驻药房分拣', detail:'2026外滩大会上，40余家机器人企业集中展示真实场景作业能力。蚂蚁集团灵波机器人进驻药房进行药品分拣演示，标志着具身智能从实验室走向商业落地。宇树、优必选、智元等头部厂商均有新品展示。', source:'外滩大会 / 36氪', url:'#'},
+    {cat:'AI工程', text:'Harness Engineering成2026年AI工程化核心范式，公式Agent=Model+Harness', detail:'2026年AI工程化领域最重要的概念转变：Harness Engineering（驾驭工程）成为核心范式。业界形成共识：Agent = Model + Harness，模型只是引擎，Harness（驾驭层）才决定Agent的实际能力边界。包括工具调用、记忆管理、任务规划、安全护栏等都在Harness层实现。', source:'业界综述 / Harness.io', url:'https://harness.io'},
+    {cat:'开源生态', text:'OpenClaw GitHub星标突破315K，登顶全球开源项目榜首', detail:'开源机器人控制框架OpenClaw GitHub星标突破315K，超越此前长期占据榜首的项目，成为全球星标最高的开源项目。OpenClaw提供从底层驱动到高层规划的全栈机器人控制能力，支持多种硬件平台，被广泛用于学术研究和商业产品开发。', source:'GitHub', url:'#'},
+    {cat:'国产算力', text:'华为昇腾384超节点性能接近GB200 NVL72两倍，已用于盘古Ultra MoE训练', detail:'华为昇腾384超节点正式发布，在特定算力基准测试中性能接近NVIDIA GB200 NVL72的两倍。该超节点已用于华为盘古Ultra MoE大模型训练，标志着国产AI算力在超大规模训练场景取得重要突破。', source:'华为 / 芯智讯', url:'#'},
+    {cat:'智能体', text:'Meta推出个人AI智能体Muse，接入Gmail/日历/Instagram，支持20/100美元月费', detail:'Meta推出个人AI智能体Muse，深度接入Gmail、Google日历、Instagram等服务，可帮助用户管理日程、处理邮件、规划行程。提供20美元/月和100美元/月两档订阅，后者支持更复杂的多步任务和更大的操作权限。', source:'Meta / The Verge', url:'https://meta.com'},
+    {cat:'视频生成', text:'智象未来Vivago R1上线，支持一次性稳定输出5分钟高质量视频', detail:'智象未来发布视频生成模型Vivago R1，支持一次性稳定输出5分钟高质量视频，解决了此前AI视频生成时长受限、一致性差的问题。模型支持文本生成视频、图像生成视频、视频编辑等多种模式，已开放API调用。', source:'智象未来 / 机器之心', url:'#'},
+    {cat:'安全争议', text:'25位菲尔兹奖得主警告"AI正毁掉数学"，登上热搜', detail:'25位菲尔兹奖得主联合发表公开信，警告AI正在"毁掉数学"——学生过度依赖AI解题导致数学思维能力退化，AI生成的数学证明存在大量隐蔽错误难以排查，学术诚信面临挑战。该公开信在社交媒体引发广泛讨论。', source:'Nature / 联合公开信', url:'#'},
+    {cat:'资本动态', text:'字节跳动296亿美元银团贷款刷新亚洲纪录，2026 AI资本支出直指700亿美元', detail:'字节跳动完成296亿美元银团贷款，刷新亚洲最大规模银团贷款纪录。资金主要用于AI基础设施建设，2026年AI资本支出计划直指700亿美元，主要投向GPU采购、数据中心建设和大模型研发。', source:'彭博 / 36氪', url:'#'},
+    {cat:'政策', text:'"算电协同"写入2026年政府工作报告，成为智算集群新型基建', detail:'"算电协同"首次写入2026年政府工作报告，成为智算集群新型基础设施建设的核心指导原则。要求AI数据中心与电力供应协同规划、协同建设，推动绿电直供、余热回收、液冷节能等技术应用，降低AI算力的能源消耗和碳排放。', source:'2026年政府工作报告', url:'#'}
+  ]}
+];
+
+// ===== 全景总览层数据 =====
+const OVERVIEW_LAYERS = [
+  {num:'L10',name:'用户交互与体验',color:'l10',chips:['GUI','语音交互','AR/VR','脑机接口','数字人','多模态融合']},
+  {num:'L9',name:'业务应用层',color:'l9',chips:['医疗','制造','能源','金融','教育','AI原生应用']},
+  {num:'L8',name:'应用开发与集成',color:'l8',chips:['前端','后端','微服务','RPA','低代码','DevOps']},
+  {num:'L7',name:'AI工程与Harness',color:'l7',chips:['Harness六层','Agent框架','MCP/A2A','MLOps','可观测性']},
+  {num:'L6',name:'AI模型与算法',color:'l6',chips:['LLM','多模态','VLA','世界模型','RAG','推理优化']},
+  {num:'L5',name:'数据架构',color:'l5',chips:['采集','存储','治理','隐私计算','特征工程','数据集']},
+  {num:'L4',name:'基础软件',color:'l4',chips:['OS','容器','数据库','中间件','文件系统']},
+  {num:'L3',name:'硬件与算力',color:'l3',chips:['CPU/GPU/NPU','存储','超节点','液冷','算电协同']},
+  {num:'L2',name:'网络与边缘',color:'l2',chips:['5G/6G','WiFi7','InfiniBand','边缘计算','MEC']},
+  {num:'L1',name:'物理感知与执行',color:'l1',chips:['传感器','执行器','IoT','机器人','可穿戴','数字孪生']}
+];
+
+// ===== 渲染引擎 =====
+const $ = id => document.getElementById(id);
+
+// 路由切换
+function switchView(viewName) {
+  document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  $('view-' + viewName).classList.add('active');
+  document.querySelector('.nav-item[data-view="' + viewName + '"]').classList.add('active');
+  window.scrollTo(0, 0);
+  location.hash = viewName;
+}
+
+// 渲染架构页
+function renderArchPage(containerId, data) {
+  const container = $(containerId);
+  let html = '';
+  data.layers.forEach((layer, li) => {
+    html += '<div class="arch-layer">';
+    html += '<div class="layer-header" style="background:var(--' + layer.color + ')">';
+    html += '<span class="layer-num">' + layer.num + '</span>';
+    html += '<span class="layer-title">' + layer.title + '</span>';
+    html += '<span class="layer-desc">' + layer.desc + '</span>';
+    html += '</div>';
+    html += '<div class="layer-body" style="background:var(--' + layer.color + '-bg)">';
+    layer.groups.forEach(group => {
+      html += '<div class="sub-group">';
+      html += '<div class="sub-group-title" style="color:var(--' + layer.color + ')">' + group.name + '</div>';
+      html += '<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:10px">';
+      group.modules.forEach(mod => {
+        const licText = mod.license === 'open' ? '开源' : mod.license === 'closed' ? '闭源' : '混合';
+        const matText = mod.maturity === 'mature' ? '成熟' : mod.maturity === 'growing' ? '成长' : mod.maturity === 'hot' ? '热点' : '萌芽';
+        html += '<div class="module-card ' + layer.color + '" onclick="showDetail(\'' + mod.id + '\',\'' + containerId + '\',' + li + ')">';
+        html += '<div class="module-name">' + mod.name;
+        html += '<span class="tag ' + mod.license + '">' + licText + '</span>';
+        html += '<span class="tag ' + mod.maturity + '">' + matText + '</span>';
+        html += '</div>';
+        html += '<div class="module-desc">' + mod.desc + '</div>';
+        html += '</div>';
+      });
+      html += '</div></div>';
+    });
+    html += '</div></div>';
+    if (li < data.layers.length - 1) {
+      html += '<div class="layer-connector"><div class="arrow-down"></div></div>';
+    }
+  });
+  container.innerHTML = html;
+}
+
+// 详情面板
+let currentMod = null;
+function showDetail(modId, containerId, layerIdx) {
+  const data = ARCH_DATA[containerId.replace('Content','')];
+  let mod = null;
+  data.layers[layerIdx].groups.forEach(g => {
+    g.modules.forEach(m => { if (m.id === modId) mod = m; });
+  });
+  if (!mod) return;
+  currentMod = mod;
+  $('detailTitle').textContent = mod.name;
+  $('detailLayer').textContent = data.layers[layerIdx].title + ' · ' + mod.desc;
+  
+  let body = '<div class="detail-section"><div class="detail-desc">' + mod.desc + '</div>';
+  body += '<div class="tab-bar">';
+  body += '<button class="tab-btn active" onclick="switchTab(\'open\',this)">开源方案</button>';
+  body += '<button class="tab-btn" onclick="switchTab(\'closed\',this)">闭源/商业方案</button>';
+  body += '</div>';
+  body += '<div id="tabContent"></div></div>';
+  $('detailBody').innerHTML = body;
+  renderTab('open');
+  $('detailOverlay').classList.add('show');
+  $('detailPanel').classList.add('show');
+}
+
+function switchTab(type, btn) {
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  renderTab(type);
+}
+
+function renderTab(type) {
+  if (!currentMod || !currentMod.products) {
+    $('tabContent').innerHTML = '<div style="color:var(--text-sub);font-size:13px">暂无详细产品信息</div>';
+    return;
+  }
+  const filtered = currentMod.products.filter(p => type === 'open' ? p.type === 'open' : p.type !== 'open');
+  if (filtered.length === 0) {
+    $('tabContent').innerHTML = '<div style="color:var(--text-sub);font-size:13px">暂无' + (type === 'open' ? '开源' : '闭源') + '方案</div>';
+    return;
+  }
+  let html = '<div class="product-list">';
+  filtered.forEach(p => {
+    html += '<div class="product-item ' + (p.type === 'open' ? 'open-source' : 'closed-source') + '">';
+    html += '<div class="product-name">' + p.name;
+    if (p.stars) html += '<span class="tag open">' + p.stars + ' Stars</span>';
+    html += '</div>';
+    if (p.desc) html += '<div class="product-desc">' + p.desc + '</div>';
+    if (p.url) html += '<a class="product-link" href="' + p.url + '" target="_blank">→ 访问 GitHub / 官网</a>';
+    if (p.install) html += '<div class="install-cmd">' + p.install + '</div>';
+    html += '</div>';
+  });
+  html += '</div>';
+  $('tabContent').innerHTML = html;
+}
+
+function closeDetail() {
+  $('detailOverlay').classList.remove('show');
+  $('detailPanel').classList.remove('show');
+}
+
+// 渲染首页全景
+function renderOverview() {
+  // 今日动态
+  let newsHtml = '';
+  DAILY_NEWS.forEach((n, i) => {
+    newsHtml += '<div class="daily-item" onclick="toggleNews(' + i + ')">';
+    newsHtml += '<div class="daily-item-cat">' + n.cat + '</div>';
+    newsHtml += '<div class="daily-item-text">' + n.text + '</div>';
+    newsHtml += '<div class="daily-item-arrow" id="newsArrow' + i + '">▼</div>';
+    newsHtml += '<div class="daily-item-detail" id="newsDetail' + i + '">';
+    newsHtml += '<div class="daily-detail-text">' + n.detail + '</div>';
+    newsHtml += '<div class="daily-detail-meta">';
+    newsHtml += '<span class="daily-detail-source">来源：' + n.source + '</span>';
+    if (n.url && n.url !== '#') newsHtml += '<a class="daily-detail-link" href="' + n.url + '" target="_blank" onclick="event.stopPropagation()">查看原文 →</a>';
+    newsHtml += '</div></div></div>';
+  });
+  $('dailyItems').innerHTML = newsHtml;
+  
+  // 全景堆叠图
+  let stackHtml = '';
+  OVERVIEW_LAYERS.forEach((layer, i) => {
+    stackHtml += '<div class="ov-layer" onclick="switchView(\'' + getViewName(layer.num) + '\')">';
+    stackHtml += '<div class="ov-layer-label" style="background:var(--' + layer.color + ')">';
+    stackHtml += '<div class="ov-layer-num">' + layer.num + '</div>';
+    stackHtml += '<div class="ov-layer-name">' + layer.name + '</div>';
+    stackHtml += '</div>';
+    stackHtml += '<div class="ov-layer-content">';
+    layer.chips.forEach(c => stackHtml += '<span class="ov-chip">' + c + '</span>');
+    stackHtml += '</div></div>';
+    if (i < OVERVIEW_LAYERS.length - 1) stackHtml += '<div class="ov-arrow">▼</div>';
+  });
+  $('overviewStack').innerHTML = stackHtml;
+}
+
+// 今日动态展开/收起
+function toggleNews(index) {
+  const detail = document.getElementById('newsDetail' + index);
+  const arrow = document.getElementById('newsArrow' + index);
+  if (detail.style.display === 'block') {
+    detail.style.display = 'none';
+    arrow.style.transform = 'rotate(0deg)';
+  } else {
+    detail.style.display = 'block';
+    arrow.style.transform = 'rotate(180deg)';
+  }
+}
+
+// 渲染历史资讯
+function renderHistory(filter) {
+  filter = filter || 'all';
+  let html = '';
+  HISTORY_NEWS.forEach((day, di) => {
+    let filteredItems = filter === 'all' ? day.items : day.items.filter(n => n.cat === filter);
+    if (filteredItems.length === 0) return;
+    html += '<div class="history-day">';
+    html += '<div class="history-day-header"><span class="history-day-date">' + day.date + '</span><span class="history-day-count">' + filteredItems.length + '条动态</span></div>';
+    html += '<div class="history-day-items">';
+    filteredItems.forEach((n, ii) => {
+      const uid = 'h' + di + '_' + ii;
+      html += '<div class="daily-item" onclick="toggleHistoryNews(\'' + uid + '\')">';
+      html += '<div class="daily-item-cat">' + n.cat + '</div>';
+      html += '<div class="daily-item-text">' + n.text + '</div>';
+      html += '<div class="daily-item-arrow" id="arrow_' + uid + '">▼</div>';
+      html += '<div class="daily-item-detail" id="detail_' + uid + '">';
+      html += '<div class="daily-detail-text">' + n.detail + '</div>';
+      html += '<div class="daily-detail-meta">';
+      html += '<span class="daily-detail-source">来源：' + n.source + '</span>';
+      if (n.url && n.url !== '#') html += '<a class="daily-detail-link" href="' + n.url + '" target="_blank" onclick="event.stopPropagation()">查看原文 →</a>';
+      html += '</div></div></div>';
+    });
+    html += '</div></div>';
+  });
+  if (html === '') html = '<div class="history-empty">该分类暂无历史动态</div>';
+  $('historyContent').innerHTML = html;
+}
+
+// 历史资讯展开/收起
+function toggleHistoryNews(uid) {
+  const detail = document.getElementById('detail_' + uid);
+  const arrow = document.getElementById('arrow_' + uid);
+  if (detail.style.display === 'block') {
+    detail.style.display = 'none';
+    arrow.style.transform = 'rotate(0deg)';
+  } else {
+    detail.style.display = 'block';
+    arrow.style.transform = 'rotate(180deg)';
+  }
+}
+
+// 历史资讯分类筛选
+function filterHistory(cat, el) {
+  document.querySelectorAll('.history-filter-item').forEach(i => i.classList.remove('active'));
+  el.classList.add('active');
+  renderHistory(cat);
+}
+
+function getViewName(num) {
+  const map = {'L1':'physical','L2':'network','L3':'hardware','L4':'softdata','L5':'softdata','L6':'aimodel','L7':'aieng','L8':'appsec','L9':'appsec','L10':'appsec'};
+  return map[num] || 'overview';
+}
+
+// 搜索功能
+function searchModules(keyword) {
+  if (!keyword.trim()) return;
+  keyword = keyword.toLowerCase();
+  let results = [];
+  Object.keys(ARCH_DATA).forEach(key => {
+    ARCH_DATA[key].layers.forEach(layer => {
+      layer.groups.forEach(g => {
+        g.modules.forEach(m => {
+          if (m.name.toLowerCase().includes(keyword) || m.desc.toLowerCase().includes(keyword)) {
+            results.push({key, layer, m});
+          }
+        });
+      });
+    });
+  });
+  if (results.length > 0) {
+    const r = results[0];
+    switchView(r.key);
+    setTimeout(() => {
+      const cards = document.querySelectorAll('#view-' + r.key + ' .module-card');
+      cards.forEach(c => {
+        if (c.textContent.includes(r.m.name.substring(0, 4))) {
+          c.style.boxShadow = '0 0 0 3px var(--l6)';
+          c.scrollIntoView({behavior:'smooth', block:'center'});
+          setTimeout(() => c.style.boxShadow = '', 3000);
+        }
+      });
+    }, 100);
+  }
+}
+
+// 初始化
+document.addEventListener('DOMContentLoaded', function() {
+  // 导航点击
+  document.querySelectorAll('.nav-item').forEach(item => {
+    item.addEventListener('click', () => switchView(item.dataset.view));
+  });
+  // 详情关闭
+  $('detailClose').addEventListener('click', closeDetail);
+  $('detailOverlay').addEventListener('click', closeDetail);
+  // 搜索
+  $('searchInput').addEventListener('keydown', e => {
+    if (e.key === 'Enter') searchModules(e.target.value);
+  });
+  // 渲染所有页面
+  renderOverview();
+  renderHistory();
+  renderArchPage('physicalContent', ARCH_DATA.physical);
+  renderArchPage('networkContent', ARCH_DATA.network);
+  renderArchPage('hardwareContent', ARCH_DATA.hardware);
+  renderArchPage('softdataContent', ARCH_DATA.softdata);
+  renderArchPage('aimodelContent', ARCH_DATA.aimodel);
+  renderArchPage('aiengContent', ARCH_DATA.aieng);
+  renderArchPage('appsecContent', ARCH_DATA.appsec);
+  // hash路由
+  const hash = location.hash.replace('#','');
+  if (hash && document.getElementById('view-' + hash)) switchView(hash);
+});
+</script>
+</body>
+</html>
