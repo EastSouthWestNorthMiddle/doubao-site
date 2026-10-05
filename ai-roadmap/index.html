@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI 发展历程全景图 · 过去 · 现在 · 未来</title>
+  <meta name="description" content="一份可下钻、可动态更新的 AI 全景路线图: 从 1943 到 2029+, 涵盖时间线、技术架构、应用版图、未来预测与学习路径。" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <!-- ============================ 顶部头部 ============================ -->
+  <header class="app-header">
+    <div class="header-top">
+      <div class="brand">
+        <div class="brand-mark">✦</div>
+        <div class="brand-text">
+          <h1>AI 发展历程全景图</h1>
+          <div class="sub">过去 · 现在 · 未来 · 立体掌握 AI</div>
+        </div>
+      </div>
+      <div class="search-wrap" id="searchWrap">
+        <span class="ic">🔍</span>
+        <input id="searchInput" type="search" placeholder="搜索事件 / 架构 / 应用 / 人物…" autocomplete="off" />
+        <button class="search-clear" id="searchClear" title="清空搜索">×</button>
+      </div>
+      <span class="meta-chip" id="metaChip">更新于 —</span>
+    </div>
+    <nav class="view-tabs" id="viewTabs">
+      <button data-view="timeline" class="active">① 时间线</button>
+      <button data-view="architecture">② 技术架构</button>
+      <button data-view="applications">③ 应用版图</button>
+      <button data-view="future">④ 未来预测</button>
+      <button data-view="learn">⑤ 学习路径</button>
+      <button data-view="glossary">⑥ 术语速查</button>
+      <button data-view="updates">⑦ 更新中心</button>
+    </nav>
+  </header>
+
+  <!-- ============================ 新手引导横幅 ============================ -->
+  <div class="novice-banner" id="noviceBanner">
+    <span class="nb-emoji">👋</span>
+    <div class="nb-text">
+      <b>第一次来?</b> 不懂技术也能看懂——
+      每个事件/架构/术语都配了"💡 通俗来讲"大白话类比, 看不懂术语点
+      <a href="#glossary" data-jump="glossary">⑥ 术语速查</a>,
+      想从零学走 <a href="#learn" data-jump="learn">⑤ 学习路径</a>。
+      建议按 ①→⑥ 顺序看一遍 = 立体掌握 AI。
+    </div>
+    <button class="nb-close" id="nbClose" title="知道了, 不再显示">×</button>
+  </div>
+
+  <!-- ============================ 主区域 ============================ -->
+  <main class="app-main">
+
+    <!-- 时间线视图 -->
+    <section id="view-timeline" class="view active">
+      <div class="view-intro" id="introTimeline"></div>
+      <div class="filter-bar" id="filterBar"></div>
+      <div class="timeline" id="timelineRoot"></div>
+    </section>
+
+    <!-- 架构视图 -->
+    <section id="view-architecture" class="view">
+      <div class="view-intro" id="introArchitecture"></div>
+      <div class="view-toggle">
+        <button class="vt-btn active" data-target="archRoot" data-mode="list">📋 列表视图</button>
+        <button class="vt-btn" data-target="archRoot" data-mode="diagram">🏗️ 架构图</button>
+      </div>
+      <div class="arch-flow-hint">↑ 数据流向上 · 硬件在底</div>
+      <div class="arch-stack" id="archRoot"></div>
+      <div class="arch-diagram" id="archDiagram"></div>
+    </section>
+
+    <!-- 应用视图 -->
+    <section id="view-applications" class="view">
+      <div class="view-intro" id="introApplications"></div>
+      <div class="view-toggle">
+        <button class="vt-btn active" data-target="appRoot" data-mode="list">📋 列表视图</button>
+        <button class="vt-btn" data-target="appRoot" data-mode="diagram">🗺️ 架构图</button>
+      </div>
+      <div class="app-grid" id="appRoot"></div>
+      <div class="app-diagram" id="appDiagram"></div>
+    </section>
+
+    <!-- 未来视图 -->
+    <section id="view-future" class="view">
+      <div class="view-intro" id="introFuture"></div>
+      <div class="future-band">
+        <div class="future-rail"></div>
+      </div>
+      <div class="pred-list" id="predRoot"></div>
+    </section>
+
+    <!-- 学习视图 -->
+    <section id="view-learn" class="view">
+      <div class="view-intro" id="introLearn"></div>
+      <div class="learn-paths" id="learnRoot"></div>
+      <div class="prod-section">
+        <h3>把 AI 转化为生产力的 5 步</h3>
+        <div class="prod-grid" id="prodRoot"></div>
+      </div>
+    </section>
+
+    <!-- 术语速查视图 -->
+    <section id="view-glossary" class="view">
+      <div class="view-intro" id="introGlossary"></div>
+      <div id="glossaryRoot"></div>
+    </section>
+
+    <!-- ============================ ⑦ 更新中心 ============================ -->
+    <section id="view-updates" class="view">
+      <div class="view-intro" id="introUpdates"></div>
+      <div id="updatesRoot"></div>
+    </section>
+
+  </main>
+
+  <!-- ============================ 下钻弹窗 ============================ -->
+  <div class="modal-mask" id="modalMask" role="dialog" aria-modal="true">
+    <div class="modal" id="modal">
+      <button class="modal-back" id="modalBack" title="返回上一级">‹ 返回</button>
+      <button class="modal-close" id="modalClose" title="关闭 (Esc)">×</button>
+      <div class="modal-body" id="modalBody"></div>
+    </div>
+  </div>
+
+  <!-- ============================ 页脚 ============================ -->
+  <footer class="app-footer">
+    <div class="row">
+      <span>🎯 目标: 看完此图 = 立体掌握 AI 的过去、现在与未来, 转化为生产力</span>
+    </div>
+    <div class="row src" id="footerSrc"></div>
+    <div class="update-hint">
+      <b>🔁 动态更新机制:</b> 数据完全驱动, 只需编辑 <code>data.js</code> 即可新增/修改事件与架构层, 无需改 HTML/CSS/JS。
+      顶部"更新于"会自动读取 <code>meta.lastUpdated</code>。建议每周日 (或重大突破时) 追加新事件。
+    </div>
+  </footer>
+
+  <script src="data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
