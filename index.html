@@ -1036,24 +1036,35 @@ const ARCH_DATA = {
           ]}
         ]}
       ]},
-      {id:'rag', num:'6.4', title:'RAG检索增强生成', desc:'外部知识注入，解决幻觉', color:'l6', groups:[
+      {id:'rag', num:'6.4', title:'RAG检索增强生成', desc:'Naive→Advanced→Modular→Agentic四代演进，外部知识注入解决幻觉', color:'l6', groups:[
         {name:'RAG技术栈', modules:[
-          {id:'basicrag',name:'基础RAG',desc:'向量检索+生成',license:'open',maturity:'mature',products:[
+          {id:'basicrag',name:'基础RAG',desc:'向量检索+生成（Naive/Advanced）',license:'open',maturity:'mature',products:[
             {name:'LangChain',type:'open',desc:'最流行LLM应用框架',url:'https://github.com/langchain-ai/langchain',install:'pip install langchain',stars:'90k+'},
             {name:'LlamaIndex',type:'open',desc:'数据框架，RAG专精',url:'https://github.com/run-llama/llama_index',install:'pip install llama-index',stars:'35k+'},
-            {name:'Haystack',type:'open',desc:'开源NLP/RAG框架',url:'https://github.com/deepset-ai/haystack',install:'pip install haystack-ai',stars:'15k+'}
+            {name:'Haystack',type:'open',desc:'开源NLP/RAG框架',url:'https://github.com/deepset-ai/haystack',install:'pip install haystack-ai',stars:'15k+'},
+            {name:'RAGFlow',type:'open',desc:'开源RAG引擎，深度文档理解+混合检索',url:'https://github.com/infiniflow/ragflow',install:'docker compose up -d',stars:'85k+'}
           ]},
-          {id:'graphrag',name:'Graph RAG',desc:'知识图谱增强检索',license:'open',maturity:'hot',products:[
+          {id:'graphrag',name:'Graph RAG',desc:'知识图谱增强，擅长全局性/多跳问题',license:'open',maturity:'hot',products:[
             {name:'GraphRAG',type:'open',desc:'微软开源图谱RAG',url:'https://github.com/microsoft/graphrag',install:'pip install graphrag',stars:'20k+'},
-            {name:'LightRAG',type:'open',desc:'轻量级图谱RAG',url:'https://github.com/HKUDS/LightRAG',install:'',stars:'10k+'}
+            {name:'LightRAG',type:'open',desc:'轻量级图谱RAG',url:'https://github.com/HKUDS/LightRAG',install:'pip install lightrag-hku',stars:'10k+'},
+            {name:'HippoRAG 2',type:'open',desc:'海马体记忆型图谱RAG，长期记忆',url:'https://github.com/OSU-NLP-Group/HippoRAG',install:'pip install hipporag',stars:'8k+'}
           ]},
-          {id:'multimodalrag',name:'多模态RAG',desc:'图文混合检索',license:'open',maturity:'growing'},
-          {id:'adaptiverag',name:'自适应/Agentic RAG',desc:'智能检索策略选择',license:'open',maturity:'growing',products:[
-            {name:'Self-RAG',type:'open',desc:'自适应检索框架',url:'https://github.com/AkariAsai/self-rag',install:'',stars:'2k+'}
+          {id:'multimodalrag',name:'多模态RAG',desc:'图文/表格/音视频统一检索',license:'open',maturity:'hot',products:[
+            {name:'ColPali',type:'open',desc:'视觉文档检索，以图搜文档免OCR',url:'https://github.com/illuin-tech/colpali',install:'pip install colpali-engine',stars:'10k+'},
+            {name:'MMORE',type:'open',desc:'多模态RAG流水线，15+文件含音视频',url:'https://github.com/swiss-ai/mmore',install:'pip install mmore',stars:'3k+'}
           ]},
-          {id:'rerank',name:'重排序(Reranker)',desc:'检索结果精排',license:'open',maturity:'mature',products:[
-            {name:'bge-reranker',type:'open',desc:'开源重排序模型',url:'https://github.com/FlagOpen/FlagEmbedding',install:'',stars:'5k+'},
+          {id:'adaptiverag',name:'自适应/Agentic RAG',desc:'Agent自主决策检索路径与重检',license:'open',maturity:'hot',products:[
+            {name:'Self-RAG',type:'open',desc:'自评估相关性后再生成',url:'https://github.com/AkariAsai/self-rag',install:'',stars:'2k+'},
+            {name:'CRAG',type:'open',desc:'纠错式RAG，检索失败自动重检',url:'https://github.com/HuskyInSalt/CRAG',install:'',stars:'2k+'}
+          ]},
+          {id:'rerank',name:'重排序(Reranker)',desc:'多路召回后精排，提升命中精度',license:'open',maturity:'mature',products:[
+            {name:'bge-reranker',type:'open',desc:'开源重排序模型',url:'https://github.com/FlagOpen/FlagEmbedding',install:'pip install FlagEmbedding',stars:'5k+'},
+            {name:'ColBERT',type:'open',desc:'晚交互检索，召回精排一体',url:'https://github.com/stanford-futuredata/ColBERT',install:'pip install colbert-ai',stars:'5k+'},
             {name:'Cohere Rerank',type:'closed',desc:'商业重排序API'}
+          ]},
+          {id:'rageval',name:'RAG评估与可观测',desc:'检索/忠实度/答案相关性度量',license:'open',maturity:'hot',products:[
+            {name:'Ragas',type:'open',desc:'RAG检索与生成质量评估框架',url:'https://github.com/explodinggradients/ragas',install:'pip install ragas',stars:'7k+'},
+            {name:'TruLens',type:'open',desc:'RAG追踪、评估与可观测',url:'https://github.com/truera/trulens',install:'pip install trulens',stars:'5k+'}
           ]}
         ]}
       ]},
