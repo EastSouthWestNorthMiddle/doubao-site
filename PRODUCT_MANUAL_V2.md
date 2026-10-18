@@ -1,23 +1,26 @@
 # doubao-site 双站产品手册 & 多 Agent 协同开发指南
 
-> 版本：v2.0 ｜ 更新：2026-10-06 ｜ 维护方：豆包 MainAgent + 多 Agent 协作组
+> 版本：v2.1 ｜ 更新：2026-10-18 ｜ 维护方：豆包 MainAgent + 多 Agent 协作组
 > 覆盖站点：① AI生态架构图谱站（主站） ② AI发展历程全景图（子站）
 > 说明：本文为双站合并版（v2.0），原《AI技术栈图谱站点·产品手册》（v1.0）与《AI发展历程全景图·产品手册》（traecode01 v2.0）独立保留，内容并入本文统一管理。
+> v2.1 变更：托管平台从 Netlify 迁移至 **GitHub Pages**（Netlify 额度耗尽已废弃），公网地址更新如下；Cloudflare Pages 国内加速镜像规划中。
 
 ---
 
 ## 〇、双站总览
 
-doubao-site 仓库承载两个高度互补的公网站点，统一通过 **GitHub main 分支 + Netlify 自动部署** 发布：
+doubao-site 仓库承载两个高度互补的公网站点，统一通过 **GitHub Pages（main 分支根目录）** 发布：
 
 | 站点 | 定位 | 公网地址 | 目录 |
 |---|---|---|---|
-| **主站**：AI生态架构图谱 | 全技术栈**横切面**（AI 时代数字化生态现在长什么样：10 层 × 8 视图） | https://regal-kitten-95e400.netlify.app/ | 仓库根（`index.html` 单文件） |
-| **子站**：AI发展历程全景图 | 历史**纵切面**（AI 从 1943 到 2029+ 怎么演变来的：时间线/架构/应用/未来/学习/术语） | https://regal-kitten-95e400.netlify.app/ai-roadmap/ | `ai-roadmap/`（4 文件） |
+| **主站**：AI生态架构图谱 | 全技术栈**横切面**（AI 时代数字化生态现在长什么样：10 层 × 8 视图） | https://eastsouthwestnorthmiddle.github.io/doubao-site/ | 仓库根（`index.html` 单文件） |
+| **子站**：AI发展历程全景图 | 历史**纵切面**（AI 从 1943 到 2029+ 怎么演变来的：时间线/架构/应用/未来/学习/术语） | https://eastsouthwestnorthmiddle.github.io/doubao-site/ai-roadmap/ | `ai-roadmap/`（4 文件） |
+
+> ⚠️ 旧地址 `https://regal-kitten-95e400.netlify.app/` 已废弃（Netlify 账户额度耗尽，2026-10 起停止新部署），不要再使用。
 
 **互补关系**：主站回答"现在有什么"，子站回答"从哪来、到哪去"。两站数据独立、互不影响，将来可融合（发展历程可作为新视图并入主站）。
 
-**部署机制**：push 到 GitHub main → Netlify 自动构建 → 约 1~2 分钟自动上线。无需手动部署。
+**部署机制**：push 到 GitHub main 分支 → GitHub Pages 自动构建 → 约 1~2 分钟自动上线。无需手动部署。仓库已设为 public（Pages 免费版要求）。
 
 ---
 
@@ -208,9 +211,9 @@ const HISTORY_NEWS = [
    - 更新 `id="todayDate"` 为当天日期
 4. 检查 HTML 结构完整、JS 语法正确（无未闭合标签/引号）。
 5. **推送 GitHub**：`git add index.html && git commit -m "daily: 2026-10-05 AI动态" && git push`
-6. Netlify 自动构建部署，验证公网主站正常。
+6. GitHub Pages 自动构建部署，验证公网主站 https://eastsouthwestnorthmiddle.github.io/doubao-site/ 正常。
 
-> ⚠️ 定时任务需要 **PC 端在运行**（文件在本地 C 盘）。如果电脑关机任务失败，可随时对豆包说"执行"手动补跑。
+> ⚠️ 定时任务在豆包云环境执行，`git push` 走仓库 token 鉴权，不依赖任何特定 PC 开机。push 失败时可对豆包说"执行"手动补跑。
 > ⚠️ 只更新 `DAILY_NEWS`、`HISTORY_NEWS`、`todayDate`，**严禁修改其他架构数据和代码逻辑**。
 
 ---
@@ -428,7 +431,7 @@ updateLog: [                 // 最新的在最前面
 
 ## 十二、总体协作模式
 
-**GitHub 单一事实源 + Netlify 自动发布 + 谁改谁负责验证**。
+**GitHub 单一事实源 + GitHub Pages 自动发布 + 谁改谁负责验证**。
 
 - 所有代码/数据变更通过 **GitHub 仓库 main 分支**流转（仓库根 = 主站，`ai-roadmap/` = 子站）；
 - push 到 main 即自动上线（无需手动部署）；
@@ -496,7 +499,7 @@ updateLog: [                 // 最新的在最前面
 - **豆包能做什么**（建议让豆包干的活）：
   - 主站每日动态搜索与更新（自动定时 + 手动触发）
   - 架构数据梳理与补充（联网核实最新技术）
-  - 双站部署、GitHub/Netlify 链路维护
+  - 双站部署、GitHub Pages 链路维护（Cloudflare Pages 镜像规划中）
   - 冲突仲裁、最终验收、部署状态确认
   - 生成/更新本文档
 - **其他 Agent 能做什么**（豆包默认让位）：
@@ -540,7 +543,7 @@ python3 -m http.server 8770
 
 **通用**：
 - [ ] 已 push 到 GitHub main 分支
-- [ ] Netlify 自动部署完成，公网可访问（主站 `/` + 子站 `/ai-roadmap/`）
+- [ ] GitHub Pages 自动部署完成，公网可访问（主站 https://eastsouthwestnorthmiddle.github.io/doubao-site/ + 子站 /ai-roadmap/）
 - [ ] commit message 符合规范，无敏感信息
 
 ---
@@ -556,8 +559,8 @@ A: 后提交者 `git pull` 出现冲突时，对比两边改动，保留正确�
 **Q: 想加一个全新视图（如"行业应用"）？**
 A: 这是结构性改动，先在对话/群中说明方案，由统筹者确认后再动 HTML 骨架和渲染逻辑。
 
-**Q: Netlify token 过期了怎么办？**
-A: 自动部署走的是 GitHub↔Netlify 连接（不需要 token 也能自动构建）。只有手动 API 部署才需要 token（有效期 7 天，过期后重新生成）。
+**Q: Netlify 旧地址为什么打不开了？**
+A: 2026-10 起 Netlify 账户额度耗尽、停止新部署，且 token 过期，该通道已废弃。现统一使用 GitHub Pages：https://eastsouthwestnorthmiddle.github.io/doubao-site/ 。push 到 main 即自动构建，无需任何 token。
 
 **Q: 子站在公网打开是代码/404？**
 A: 确认 zip 交付时根目录带 `ai-roadmap/` 层、内部引用为相对路径、未硬编码 `/` 根路径；子站必须通过 `/ai-roadmap/` 路径访问。
