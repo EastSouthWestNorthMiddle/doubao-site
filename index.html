@@ -185,6 +185,11 @@ a{color:inherit;text-decoration:none}
 .ov-layer-name{font-size:13px;font-weight:600}
 .ov-layer-content{padding:12px 16px;background:var(--card);display:flex;flex-wrap:wrap;gap:6px;align-items:center}
 .ov-chip{background:var(--bg);padding:4px 10px;border-radius:4px;font-size:11px;color:var(--text-sub)}
+.ov-modules{display:grid;grid-template-columns:repeat(auto-fill,minmax(168px,1fr));gap:6px;width:100%}
+.ov-module{background:var(--bg);border-radius:6px;padding:6px 8px;display:flex;flex-direction:column;gap:3px;border-left:3px solid var(--border)}
+.ov-module-name{font-size:12px;font-weight:700;color:var(--text)}
+.ov-module-desc{font-size:10px;color:var(--text-sub);line-height:1.45}
+.ov-module .ov-chip{align-self:flex-start;background:var(--card)}
 .ov-arrow{text-align:center;padding:2px 0;color:#B0B8C8;font-size:16px}
 
 /* ===== 指标看板 ===== */
@@ -1495,16 +1500,64 @@ const HISTORY_NEWS = [
 
 // ===== 全景总览层数据 =====
 const OVERVIEW_LAYERS = [
-  {num:'L10',name:'用户交互与体验',color:'l10',chips:['GUI','语音交互','AR/VR','脑机接口','数字人','多模态融合']},
-  {num:'L9',name:'业务应用层',color:'l9',chips:['医疗','制造','能源','金融','教育','AI原生应用']},
-  {num:'L8',name:'应用开发与集成',color:'l8',chips:['前端','后端','微服务','RPA','低代码','DevOps']},
-  {num:'L7',name:'AI工程与Harness',color:'l7',chips:['Harness六层','Agent框架','MCP/A2A','MLOps','可观测性']},
-  {num:'L6',name:'AI模型与算法',color:'l6',chips:['LLM','多模态','VLA','世界模型','RAG','推理优化']},
-  {num:'L5',name:'数据架构',color:'l5',chips:['采集','存储','治理','隐私计算','特征工程','数据集']},
-  {num:'L4',name:'基础软件',color:'l4',chips:['OS','容器','数据库','中间件','文件系统']},
-  {num:'L3',name:'硬件与算力',color:'l3',chips:['CPU/GPU/NPU','存储','超节点','液冷','算电协同']},
-  {num:'L2',name:'网络与边缘',color:'l2',chips:['5G/6G','WiFi7','InfiniBand','边缘计算','MEC']},
-  {num:'L1',name:'物理感知与执行',color:'l1',chips:['传感器','执行器','IoT','机器人','可穿戴','数字孪生']}
+  {num:'L10',name:'用户交互与体验',color:'l10',modules:[
+    {name:'图形界面',desc:'Web/桌面GUI与数据可视化，人机第一入口',techs:['Web UI','桌面应用','仪表盘','低摩擦交互']},
+    {name:'语音交互',desc:'ASR/TTS与语音助手，解放双手的对话入口',techs:['ASR','TTS','语音助手','唤醒词']},
+    {name:'沉浸式体验',desc:'AR/VR/MR空间计算，虚实融合呈现',techs:['AR','VR','MR','空间计算']},
+    {name:'数字人',desc:'虚拟形象与数字分身，实时表情驱动',techs:['数字人','虚拟形象','表情驱动','TTS对口型']},
+    {name:'脑机接口',desc:'非侵入EEG意图解码，前沿交互方向',techs:['EEG','BCI','意图解码','神经接口']},
+    {name:'多模态融合',desc:'视觉/语音/手势多输入协同与情境感知',techs:['多模态输入','情境感知','融合交互','眼动追踪']}
+  ]},
+  {num:'L9',name:'业务应用层',color:'l9',modules:[
+    {name:'行业纵深',desc:'医疗/制造/能源/金融/教育/农业场景落地',techs:['智慧医疗','智能制造','智慧能源','智慧金融','智慧教育']},
+    {name:'通用助手',desc:'Copilot/客服/营销/内容创作等全员生产力',techs:['Copilot','智能客服','营销AI','AIGC创作']},
+    {name:'AI原生应用',desc:'以智能体为核心的新应用形态',techs:['AI原生应用','智能决策','BI+AI','智能体应用']},
+    {name:'行业生态',desc:'行业大模型与生态平台，场景化二次开发',techs:['行业大模型','生态平台','场景模型','私有化部署']}
+  ]},
+  {num:'L8',name:'应用开发与集成',color:'l8',modules:[
+    {name:'前端与交互',desc:'前端框架与可视化组件，快速搭建界面',techs:['React/Vue','可视化','组件库','Web框架']},
+    {name:'后端与数据',desc:'后端服务/微服务/Serverless，弹性扩展',techs:['微服务','Serverless','API服务','事件驱动']},
+    {name:'集成与自动化',desc:'RPA/低代码/工作流，系统互联互通',techs:['RPA','低代码','API网关','工作流引擎']},
+    {name:'研发效能',desc:'DevOps/CI-CD/可观测，交付全链路',techs:['DevOps','CI/CD','监控告警','自动化测试']}
+  ]},
+  {num:'L7',name:'AI工程与Harness',color:'l7',modules:[
+    {name:'Harness六层',desc:'模型接入-工具-记忆-规划-执行-护栏全链路',techs:['模型接入','工具调用','记忆管理','规划推理','执行编排','安全护栏']},
+    {name:'Agent框架',desc:'通用智能体开发框架与编排运行时',techs:['LangChain','CrewAI','AutoGen','Swarm']},
+    {name:'协议标准',desc:'智能体互联互通协议与工具生态',techs:['MCP','A2A','Function Calling','工具协议']},
+    {name:'模型工程',desc:'MLOps/提示工程/评测/可观测',techs:['MLOps','Prompt工程','模型评测','LLM可观测']}
+  ]},
+  {num:'L6',name:'AI模型与算法',color:'l6',modules:[
+    {name:'基础大模型',desc:'文本/多模态/世界模型/具身VLA',techs:['LLM','VLM','世界模型','VLA']},
+    {name:'关键能力',desc:'RAG/长上下文/推理增强',techs:['RAG','长上下文','推理时计算','工具增强']},
+    {name:'训练方法',desc:'预训练/微调/对齐/规模化架构',techs:['预训练','SFT','RLHF/DPO','MoE','蒸馏']},
+    {name:'推理优化',desc:'量化/缓存/端云一体，降本增效',techs:['量化','KV Cache','投机采样','端云一体']}
+  ]},
+  {num:'L5',name:'数据架构',color:'l5',modules:[
+    {name:'数据采集',desc:'结构化/非结构化/流式数据接入',techs:['CDC','爬虫','流式采集','埋点']},
+    {name:'存储计算',desc:'数仓/数据湖/湖仓一体，批流一体',techs:['数据仓库','数据湖','湖仓一体','实时数仓']},
+    {name:'治理质量',desc:'元数据/血缘/质量/分级分类',techs:['元数据','数据血缘','数据质量','分级分类']},
+    {name:'数据智能',desc:'特征工程/隐私计算/合成数据',techs:['特征工程','隐私计算','合成数据','数据集']}
+  ]},
+  {num:'L4',name:'基础软件',color:'l4',modules:[
+    {name:'系统软件',desc:'操作系统/虚拟化/容器云原生底座',techs:['Linux','容器','Kubernetes','虚拟机']},
+    {name:'数据中间件',desc:'关系/NoSQL/向量库与消息缓存',techs:['关系库','NoSQL','向量数据库','缓存','消息队列']},
+    {name:'计算框架',desc:'分布式计算/调度/存储引擎',techs:['Spark/Flink','任务调度','分布式存储','高性能计算']}
+  ]},
+  {num:'L3',name:'硬件与算力',color:'l3',modules:[
+    {name:'计算芯片',desc:'通用/加速/专用计算芯片矩阵',techs:['CPU','GPU','NPU/ASIC','FPGA']},
+    {name:'存储与内存',desc:'高带宽内存与新型存储互连',techs:['HBM','SSD','CXL','内存池化']},
+    {name:'算力系统',desc:'超节点/集群/液冷/算电协同',techs:['AI超节点','智算集群','液冷','光互连','算电协同']}
+  ]},
+  {num:'L2',name:'网络与边缘',color:'l2',modules:[
+    {name:'通信网络',desc:'移动通信与无线接入演进',techs:['5G/6G','WiFi7','卫星通信','NTN']},
+    {name:'数据中心网络',desc:'高性能无损网络与智能网卡',techs:['InfiniBand','RoCE','DPU','无损网络']},
+    {name:'边缘计算',desc:'边缘推理/云边协同/算力下沉',techs:['边缘计算','MEC','云边协同','边缘推理']}
+  ]},
+  {num:'L1',name:'物理感知与执行',color:'l1',modules:[
+    {name:'感知系统',desc:'视觉/雷达/触觉/生物多模态传感',techs:['摄像头','LiDAR','触觉/电子皮肤','生物传感']},
+    {name:'执行系统',desc:'机械臂/灵巧手/移动底盘驱动',techs:['机械臂','灵巧手','AGV/AMR','伺服驱动']},
+    {name:'终端生态',desc:'IoT/可穿戴/数字孪生/机器人',techs:['IoT','可穿戴','数字孪生','人形机器人']}
+  ]}
 ];
 
 // ===== 渲染引擎 =====
@@ -1645,7 +1698,17 @@ function renderOverview() {
     stackHtml += '<div class="ov-layer-name">' + layer.name + '</div>';
     stackHtml += '</div>';
     stackHtml += '<div class="ov-layer-content">';
-    layer.chips.forEach(c => stackHtml += '<span class="ov-chip">' + c + '</span>');
+    if (layer.modules) {
+      stackHtml += '<div class="ov-modules">';
+      layer.modules.forEach(m => {
+        stackHtml += '<div class="ov-module">';
+        stackHtml += '<div class="ov-module-name">' + m.name + '</div>';
+        if (m.desc) stackHtml += '<div class="ov-module-desc">' + m.desc + '</div>';
+        if (m.techs) m.techs.forEach(t => stackHtml += '<span class="ov-chip">' + t + '</span>');
+        stackHtml += '</div>';
+      });
+      stackHtml += '</div>';
+    }
     stackHtml += '</div></div>';
     if (i < OVERVIEW_LAYERS.length - 1) stackHtml += '<div class="ov-arrow">▼</div>';
   });
